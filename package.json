@@ -1,0 +1,56 @@
+{
+  "name": "turnopro-eu",
+  "version": "1.0.0",
+  "private": true,
+  "description": "TurnoPro EU - Registros y Entrega de Turno",
+  "main": "electron/main.js",
+  "author": "TurnoPro EU",
+  "scripts": {
+    "build:web": "node scripts/build.js",
+    "start": "npm run build:web && electron .",
+    "dist": "npm run build:web && electron-builder --win --publish never",
+    "sync": "npm run build:web && cap sync",
+    "assets": "capacitor-assets generate --android --iconBackgroundColor \"#0f766e\" --iconBackgroundColorDark \"#0f766e\" --splashBackgroundColor \"#eef4f4\" --splashBackgroundColorDark \"#0b1416\""
+  },
+  "dependencies": {
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "jszip": "3.10.1",
+    "jspdf": "2.5.1",
+    "@capacitor/core": "^7.0.0",
+    "@capacitor/android": "^7.0.0",
+    "@capacitor/filesystem": "^7.0.0",
+    "@capacitor/share": "^7.0.0",
+    "@capacitor/local-notifications": "^7.0.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.24.0",
+    "tailwindcss": "3.4.17",
+    "@capacitor/cli": "^7.0.0",
+    "@capacitor/assets": "^3.0.5",
+    "electron": "^33.2.0",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "cl.turnopro.eu",
+    "productName": "TurnoPro EU",
+    "files": [
+      "electron/**",
+      "www/**",
+      "build/icon.png"
+    ],
+    "directories": {
+      "buildResources": "build",
+      "output": "dist"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon.ico",
+      "signAndEditExecutable": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  }
+}

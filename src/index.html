@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TurnoPro EU — Registros y Entrega de Turno</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<script>tailwind.config={darkMode:'class'}</script>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{font-family:'IBM Plex Sans',system-ui,sans-serif;background:#eef2f3}
+html.dark body{background:#0e1517}
+html.hc *{border-color:#000!important}html.hc.dark *{border-color:#fff!important}html.hc .text-slate-500{color:#0f172a!important}html.hc.dark .text-slate-500{color:#f1f5f9!important}html.hc .opacity-40{opacity:.6!important}
+pre{white-space:pre-wrap;font-family:ui-monospace,Menlo,Consolas,monospace}
+</style>
+<style id="themes">html[data-t="clinico"]{--bg:#eef4f4;--surf:#ffffff;--bg2:#e6eeee;--ink:#0f2b2b;--ink2:#ffffff;--muted:#56696a;--line:#cbdada;--acc:#0f766e;--accS:#115e59;--accSoft:#e0f2f1;--accT:#115e59;--onAcc:#ffffff;--s200:#cbdada;--s900:#0f2b2b;--r:14px;--r2:10px}
+html[data-t="clinico"].dark{--bg:#0b1416;--surf:#12201f;--bg2:#182a29;--ink:#e6f2f1;--ink2:#0b1416;--muted:#9ab5b2;--line:#2a4442;--acc:#2dd4bf;--accS:#5eead4;--accSoft:#0f3b37;--accT:#5eead4;--onAcc:#0b1416;--s200:#e6f2f1;--s900:#0b1416}
+html[data-t="clinico"] body{background:var(--bg)!important}
+html[data-t="clinico"] .bg-white{background-color:var(--surf)!important}
+html[data-t="clinico"] .bg-slate-100{background-color:var(--bg2)!important}
+html[data-t="clinico"] .bg-slate-800{background-color:var(--ink)!important}
+html[data-t="clinico"] .bg-slate-200{background-color:var(--s200)!important}
+html[data-t="clinico"] .text-slate-800{color:var(--ink)!important}
+html[data-t="clinico"] .text-slate-200{color:var(--ink)!important}
+html[data-t="clinico"] .text-slate-700{color:var(--ink)!important}
+html[data-t="clinico"] .text-slate-900{color:var(--s900)!important}
+html[data-t="clinico"] .text-white{color:var(--onAcc)!important}
+html[data-t="clinico"] .text-slate-300{color:var(--muted)!important}
+html[data-t="clinico"] .text-slate-500{color:var(--muted)!important}
+html[data-t="clinico"] .text-slate-600{color:var(--muted)!important}
+html[data-t="clinico"] .border-slate-200{border-color:var(--line)!important}
+html[data-t="clinico"] .border-slate-300{border-color:var(--line)!important}
+html[data-t="clinico"] .border-slate-400{border-color:var(--line)!important}
+html[data-t="clinico"] .border-slate-600{border-color:var(--line)!important}
+html[data-t="clinico"] .border-slate-700{border-color:var(--line)!important}
+html[data-t="clinico"] .border-slate-800{border-color:var(--line)!important}
+html[data-t="clinico"] .bg-teal-700{background-color:var(--acc)!important}
+html[data-t="clinico"] .bg-teal-600{background-color:var(--acc)!important}
+html[data-t="clinico"] .bg-teal-800{background-color:var(--accS)!important}
+html[data-t="clinico"] .bg-teal-50{background-color:var(--accSoft)!important}
+html[data-t="clinico"] .bg-teal-100{background-color:var(--accSoft)!important}
+html[data-t="clinico"] .bg-teal-900{background-color:var(--accSoft)!important}
+html[data-t="clinico"] .bg-teal-950{background-color:var(--accSoft)!important}
+html[data-t="clinico"] .text-teal-800{color:var(--accT)!important}
+html[data-t="clinico"] .text-teal-400{color:var(--accT)!important}
+html[data-t="clinico"] .text-teal-900{color:var(--accT)!important}
+html[data-t="clinico"] .text-teal-200{color:var(--accT)!important}
+html[data-t="clinico"] .text-teal-300{color:var(--accT)!important}
+html[data-t="clinico"] .text-teal-700{color:var(--accT)!important}
+html[data-t="clinico"] .border-teal-600{border-color:var(--acc)!important}
+html[data-t="clinico"] .border-teal-700{border-color:var(--acc)!important}
+html[data-t="clinico"] .rounded-xl{border-radius:var(--r)!important}
+html[data-t="clinico"] .rounded-lg{border-radius:var(--r2)!important}
+html[data-t="clinico"] section.rounded-xl{box-shadow:0 1px 2px rgba(15,23,42,.06),0 10px 24px -14px rgba(15,23,42,.22)}
+html[data-t="clinico"].dark section.rounded-xl{box-shadow:none}
+html[data-t="sereno"]{--bg:#f2f5fb;--surf:#ffffff;--bg2:#e7edf8;--ink:#14213d;--ink2:#ffffff;--muted:#5b6a85;--line:#d3dcec;--acc:#2563eb;--accS:#1d4ed8;--accSoft:#e0e9fd;--accT:#1e40af;--onAcc:#ffffff;--s200:#d3dcec;--s900:#14213d;--r:18px;--r2:12px}
+html[data-t="sereno"].dark{--bg:#0b1220;--surf:#121c2f;--bg2:#17243b;--ink:#e5ecfa;--ink2:#0b1220;--muted:#93a3c2;--line:#25344f;--acc:#60a5fa;--accS:#93c5fd;--accSoft:#16294a;--accT:#93c5fd;--onAcc:#0b1220;--s200:#e5ecfa;--s900:#0b1220}
+html[data-t="sereno"] body{background:var(--bg)!important}
+html[data-t="sereno"] .bg-white{background-color:var(--surf)!important}
+html[data-t="sereno"] .bg-slate-100{background-color:var(--bg2)!important}
+html[data-t="sereno"] .bg-slate-800{background-color:var(--ink)!important}
+html[data-t="sereno"] .bg-slate-200{background-color:var(--s200)!important}
+html[data-t="sereno"] .text-slate-800{color:var(--ink)!important}
+html[data-t="sereno"] .text-slate-200{color:var(--ink)!important}
+html[data-t="sereno"] .text-slate-700{color:var(--ink)!important}
+html[data-t="sereno"] .text-slate-900{color:var(--s900)!important}
+html[data-t="sereno"] .text-white{color:var(--onAcc)!important}
+html[data-t="sereno"] .text-slate-300{color:var(--muted)!important}
+html[data-t="sereno"] .text-slate-500{color:var(--muted)!important}
+html[data-t="sereno"] .text-slate-600{color:var(--muted)!important}
+html[data-t="sereno"] .border-slate-200{border-color:var(--line)!important}
+html[data-t="sereno"] .border-slate-300{border-color:var(--line)!important}
+html[data-t="sereno"] .border-slate-400{border-color:var(--line)!important}
+html[data-t="sereno"] .border-slate-600{border-color:var(--line)!important}
+html[data-t="sereno"] .border-slate-700{border-color:var(--line)!important}
+html[data-t="sereno"] .border-slate-800{border-color:var(--line)!important}
+html[data-t="sereno"] .bg-teal-700{background-color:var(--acc)!important}
+html[data-t="sereno"] .bg-teal-600{background-color:var(--acc)!important}
+html[data-t="sereno"] .bg-teal-800{background-color:var(--accS)!important}
+html[data-t="sereno"] .bg-teal-50{background-color:var(--accSoft)!important}
+html[data-t="sereno"] .bg-teal-100{background-color:var(--accSoft)!important}
+html[data-t="sereno"] .bg-teal-900{background-color:var(--accSoft)!important}
+html[data-t="sereno"] .bg-teal-950{background-color:var(--accSoft)!important}
+html[data-t="sereno"] .text-teal-800{color:var(--accT)!important}
+html[data-t="sereno"] .text-teal-400{color:var(--accT)!important}
+html[data-t="sereno"] .text-teal-900{color:var(--accT)!important}
+html[data-t="sereno"] .text-teal-200{color:var(--accT)!important}
+html[data-t="sereno"] .text-teal-300{color:var(--accT)!important}
+html[data-t="sereno"] .text-teal-700{color:var(--accT)!important}
+html[data-t="sereno"] .border-teal-600{border-color:var(--acc)!important}
+html[data-t="sereno"] .border-teal-700{border-color:var(--acc)!important}
+html[data-t="sereno"] .rounded-xl{border-radius:var(--r)!important}
+html[data-t="sereno"] .rounded-lg{border-radius:var(--r2)!important}
+html[data-t="sereno"] section.rounded-xl{box-shadow:0 1px 2px rgba(15,23,42,.06),0 10px 24px -14px rgba(15,23,42,.22)}
+html[data-t="sereno"].dark section.rounded-xl{box-shadow:none}
+html[data-t="calido"]{--bg:#f8f4ee;--surf:#fffdf9;--bg2:#f1e9dd;--ink:#3b2a1a;--ink2:#fffaf2;--muted:#7a6552;--line:#e6d9c6;--acc:#b45309;--accS:#92400e;--accSoft:#fdf0dc;--accT:#92400e;--onAcc:#ffffff;--s200:#e6d9c6;--s900:#3b2a1a;--r:10px;--r2:8px}
+html[data-t="calido"].dark{--bg:#14100b;--surf:#1d170f;--bg2:#261e14;--ink:#f3e8d8;--ink2:#14100b;--muted:#b8a48a;--line:#3a2e20;--acc:#f59e0b;--accS:#fbbf24;--accSoft:#3a2a0f;--accT:#fcd34d;--onAcc:#14100b;--s200:#f3e8d8;--s900:#14100b}
+html[data-t="calido"] body{background:var(--bg)!important}
+html[data-t="calido"] .bg-white{background-color:var(--surf)!important}
+html[data-t="calido"] .bg-slate-100{background-color:var(--bg2)!important}
+html[data-t="calido"] .bg-slate-800{background-color:var(--ink)!important}
+html[data-t="calido"] .bg-slate-200{background-color:var(--s200)!important}
+html[data-t="calido"] .text-slate-800{color:var(--ink)!important}
+html[data-t="calido"] .text-slate-200{color:var(--ink)!important}
+html[data-t="calido"] .text-slate-700{color:var(--ink)!important}
+html[data-t="calido"] .text-slate-900{color:var(--s900)!important}
+html[data-t="calido"] .text-white{color:var(--onAcc)!important}
+html[data-t="calido"] .text-slate-300{color:var(--muted)!important}
+html[data-t="calido"] .text-slate-500{color:var(--muted)!important}
+html[data-t="calido"] .text-slate-600{color:var(--muted)!important}
+html[data-t="calido"] .border-slate-200{border-color:var(--line)!important}
+html[data-t="calido"] .border-slate-300{border-color:var(--line)!important}
+html[data-t="calido"] .border-slate-400{border-color:var(--line)!important}
+html[data-t="calido"] .border-slate-600{border-color:var(--line)!important}
+html[data-t="calido"] .border-slate-700{border-color:var(--line)!important}
+html[data-t="calido"] .border-slate-800{border-color:var(--line)!important}
+html[data-t="calido"] .bg-teal-700{background-color:var(--acc)!important}
+html[data-t="calido"] .bg-teal-600{background-color:var(--acc)!important}
+html[data-t="calido"] .bg-teal-800{background-color:var(--accS)!important}
+html[data-t="calido"] .bg-teal-50{background-color:var(--accSoft)!important}
+html[data-t="calido"] .bg-teal-100{background-color:var(--accSoft)!important}
+html[data-t="calido"] .bg-teal-900{background-color:var(--accSoft)!important}
+html[data-t="calido"] .bg-teal-950{background-color:var(--accSoft)!important}
+html[data-t="calido"] .text-teal-800{color:var(--accT)!important}
+html[data-t="calido"] .text-teal-400{color:var(--accT)!important}
+html[data-t="calido"] .text-teal-900{color:var(--accT)!important}
+html[data-t="calido"] .text-teal-200{color:var(--accT)!important}
+html[data-t="calido"] .text-teal-300{color:var(--accT)!important}
+html[data-t="calido"] .text-teal-700{color:var(--accT)!important}
+html[data-t="calido"] .border-teal-600{border-color:var(--acc)!important}
+html[data-t="calido"] .border-teal-700{border-color:var(--acc)!important}
+html[data-t="calido"] .rounded-xl{border-radius:var(--r)!important}
+html[data-t="calido"] .rounded-lg{border-radius:var(--r2)!important}
+html[data-t="calido"] section.rounded-xl{box-shadow:0 1px 2px rgba(15,23,42,.06),0 10px 24px -14px rgba(15,23,42,.22)}
+html[data-t="calido"].dark section.rounded-xl{box-shadow:none}
+html[data-t="grafito"]{--bg:#f4f4f5;--surf:#ffffff;--bg2:#e4e4e7;--ink:#000000;--ink2:#ffffff;--muted:#3f3f46;--line:#71717a;--acc:#1e293b;--accS:#000000;--accSoft:#e2e8f0;--accT:#000000;--onAcc:#ffffff;--s200:#71717a;--s900:#000000;--r:6px;--r2:4px}
+html[data-t="grafito"].dark{--bg:#000000;--surf:#0a0a0a;--bg2:#18181b;--ink:#ffffff;--ink2:#000000;--muted:#d4d4d8;--line:#a1a1aa;--acc:#e2e8f0;--accS:#ffffff;--accSoft:#27272a;--accT:#ffffff;--onAcc:#000000;--s200:#ffffff;--s900:#000000}
+html[data-t="grafito"] body{background:var(--bg)!important}
+html[data-t="grafito"] .bg-white{background-color:var(--surf)!important}
+html[data-t="grafito"] .bg-slate-100{background-color:var(--bg2)!important}
+html[data-t="grafito"] .bg-slate-800{background-color:var(--ink)!important}
+html[data-t="grafito"] .bg-slate-200{background-color:var(--s200)!important}
+html[data-t="grafito"] .text-slate-800{color:var(--ink)!important}
+html[data-t="grafito"] .text-slate-200{color:var(--ink)!important}
+html[data-t="grafito"] .text-slate-700{color:var(--ink)!important}
+html[data-t="grafito"] .text-slate-900{color:var(--s900)!important}
+html[data-t="grafito"] .text-white{color:var(--onAcc)!important}
+html[data-t="grafito"] .text-slate-300{color:var(--muted)!important}
+html[data-t="grafito"] .text-slate-500{color:var(--muted)!important}
+html[data-t="grafito"] .text-slate-600{color:var(--muted)!important}
+html[data-t="grafito"] .border-slate-200{border-color:var(--line)!important}
+html[data-t="grafito"] .border-slate-300{border-color:var(--line)!important}
+html[data-t="grafito"] .border-slate-400{border-color:var(--line)!important}
+html[data-t="grafito"] .border-slate-600{border-color:var(--line)!important}
+html[data-t="grafito"] .border-slate-700{border-color:var(--line)!important}
+html[data-t="grafito"] .border-slate-800{border-color:var(--line)!important}
+html[data-t="grafito"] .bg-teal-700{background-color:var(--acc)!important}
+html[data-t="grafito"] .bg-teal-600{background-color:var(--acc)!important}
+html[data-t="grafito"] .bg-teal-800{background-color:var(--accS)!important}
+html[data-t="grafito"] .bg-teal-50{background-color:var(--accSoft)!important}
+html[data-t="grafito"] .bg-teal-100{background-color:var(--accSoft)!important}
+html[data-t="grafito"] .bg-teal-900{background-color:var(--accSoft)!important}
+html[data-t="grafito"] .bg-teal-950{background-color:var(--accSoft)!important}
+html[data-t="grafito"] .text-teal-800{color:var(--accT)!important}
+html[data-t="grafito"] .text-teal-400{color:var(--accT)!important}
+html[data-t="grafito"] .text-teal-900{color:var(--accT)!important}
+html[data-t="grafito"] .text-teal-200{color:var(--accT)!important}
+html[data-t="grafito"] .text-teal-300{color:var(--accT)!important}
+html[data-t="grafito"] .text-teal-700{color:var(--accT)!important}
+html[data-t="grafito"] .border-teal-600{border-color:var(--acc)!important}
+html[data-t="grafito"] .border-teal-700{border-color:var(--acc)!important}
+html[data-t="grafito"] .rounded-xl{border-radius:var(--r)!important}
+html[data-t="grafito"] .rounded-lg{border-radius:var(--r2)!important}
+html[data-t="grafito"] section.rounded-xl{box-shadow:0 1px 2px rgba(15,23,42,.06),0 10px 24px -14px rgba(15,23,42,.22)}
+html[data-t="grafito"].dark section.rounded-xl{box-shadow:none}</style>
+<script>try{document.documentElement.dataset.t=localStorage.getItem("turnopro_eu_v2_th")||"clinico"}catch(e){}</script>
+</head>
+<body class="text-slate-800 dark:text-slate-200">
+<div id="root"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
+<script type="text/babel">
+const {useState,useEffect,useMemo,useRef}=React;
+const KEY='turnopro_eu_v2',OLD='turnopro_eu_v1',ST='turnopro_eu_v2_st',SK='turnopro_eu_v2_sec';
+const iso=d=>new Date(Date.now()-d*864e5).toISOString().slice(0,10);
+const days=f=>Math.max(0,Math.floor((Date.now()-new Date(f+'T00:00:00'))/864e5));
+const clean=s=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^\x09\x0A\x20-\x7E]/g,'');
+const Ic=({d,c='w-4 h-4'})=><svg className={c} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d={d}/></svg>;
+const P={plus:'M12 5v14M5 12h14',trash:'M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6',copy:'M9 9h11v11H9zM5 15H4V4h11v1',moon:'M21 13A9 9 0 1 1 11 3a7 7 0 0 0 10 10z',sun:'M12 4V2M12 22v-2M4 12H2M22 12h-2M6 6 4.5 4.5M19.5 19.5 18 18M18 6l1.5-1.5M4.5 19.5 6 18M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z',warn:'M12 3 2 21h20zM12 10v5M12 18h.01',ok:'M5 13l4 4L19 7'};
+
+const C={g:'#16a34a',l:'#84cc16',y:'#eab308',o:'#ea580c',r:'#dc2626',d:'#7f1d1d'};
+const SC={
+downton:{n:'Downton (caídas)',min:0,max:11,info:'Estima el riesgo de caída del paciente hospitalizado con 5 factores: caídas previas, medicamentos, déficit sensorial, estado mental y deambulación. Puntaje 0-11.',
+items:[['Caídas previas',[['No',0],['Sí',1]]],['Medicamentos (tranquilizantes/sedantes, diuréticos, hipotensores, antiparkinsonianos, antidepresivos)',[['Ninguno',0],['1 categoría',1],['2 categorías',2],['3 categorías',3],['4 categorías',4],['5 categorías',5]]],['Déficit sensorial (visual, auditivo, extremidades)',[['Ninguno',0],['1 déficit',1],['2 déficits',2],['3 déficits',3]]],['Estado mental',[['Orientado',0],['Confuso',1]]],['Deambulación',[['Normal',0],['Segura con ayuda',1],['Insegura con/sin ayuda',1],['Imposible',1]]]],
+rng:[{lo:0,hi:2,l:'Riesgo bajo',c:C.g},{lo:3,hi:11,l:'RIESGO ALTO',c:C.r}]},
+braden:{n:'Braden (LPP)',min:6,max:23,info:'Predice el riesgo de lesiones por presión (LPP) según 6 factores. Puntaje 6-23: a menor puntaje, mayor riesgo.',
+items:[['Percepción sensorial',[['Completamente limitada',1],['Muy limitada',2],['Levemente limitada',3],['Sin limitación',4]]],['Humedad',[['Constante',1],['Muy húmeda',2],['Ocasional',3],['Rara vez',4]]],['Actividad',[['En cama',1],['En silla',2],['Camina ocasional',3],['Camina frecuente',4]]],['Movilidad',[['Inmóvil',1],['Muy limitada',2],['Ligeramente limitada',3],['Sin limitaciones',4]]],['Nutrición',[['Muy pobre',1],['Probablemente inadecuada',2],['Adecuada',3],['Excelente',4]]],['Roce y deslizamiento',[['Problema',1],['Problema potencial',2],['Sin problema aparente',3]]]],
+rng:[{lo:6,hi:9,l:'RIESGO MUY ALTO',c:C.d},{lo:10,hi:12,l:'RIESGO ALTO',c:C.o},{lo:13,hi:14,l:'Riesgo moderado',c:C.y},{lo:15,hi:18,l:'Riesgo bajo',c:C.l},{lo:19,hi:23,l:'Sin riesgo',c:C.g}]},
+maddox:{n:'Maddox (flebitis)',pre:'grado ',np:1,min:0,max:5,info:'Clasifica la flebitis asociada a vía venosa periférica en grados 0-5 y orienta la conducta (referencial).',
+items:[['Grado observado',[['G0 Sin signos',0],['G1 Eritema con/sin dolor',1],['G2 Dolor + eritema y/o edema',2],['G3 + endurecimiento y cordón palpable',3],['G4 Cordón mayor a 2,5 cm',4],['G5 + fiebre o pus',5]]]],
+rng:[{lo:0,hi:0,l:'Sin signos: observar',c:C.g},{lo:1,hi:1,l:'Vigilar y reevaluar',c:C.l},{lo:2,hi:2,l:'Retirar VVP',c:C.y},{lo:3,hi:3,l:'Retirar VVP y avisar a médico',c:C.o},{lo:4,hi:4,l:'Retirar VVP y avisar a médico',c:C.r},{lo:5,hi:5,l:'Retirar VVP y avisar a médico (urgente)',c:C.d}]},
+eva:{n:'Dolor EVA/FLACC',np:1,min:0,max:10,info:'EVA: el paciente puntúa su dolor de 0 (sin dolor) a 10 (peor dolor imaginable). FLACC (cara, piernas, actividad, llanto, consuelo; 0-2 c/u) se usa si no puede autorreportar y tiene las mismas bandas.',
+items:[['Intensidad (0 = sin dolor, 10 = peor dolor)',[0,1,2,3,4,5,6,7,8,9,10].map(i=>[String(i),i])]],
+rng:[{lo:0,hi:0,l:'Sin dolor',c:C.g},{lo:1,hi:3,l:'Dolor leve',c:C.l},{lo:4,hi:6,l:'Dolor moderado',c:C.o},{lo:7,hi:10,l:'Dolor severo',c:C.r}]},
+glasgow:{n:'Glasgow',min:3,max:15,info:'Mide el nivel de conciencia sumando apertura ocular (1-4), respuesta verbal (1-5) y respuesta motora (1-6). Puntaje 3-15.',
+items:[['Apertura ocular (1-4)',[['Espontánea',4],['Al llamado',3],['Al dolor',2],['Ninguna',1]]],['Respuesta verbal (1-5)',[['Orientado',5],['Confuso',4],['Inapropiado',3],['Incomprensible',2],['Ninguna',1]]],['Respuesta motora (1-6)',[['Obedece órdenes',6],['Localiza',5],['Retira',4],['Flexión anormal',3],['Extensión anormal',2],['Ninguna',1]]]],
+rng:[{lo:3,hi:8,l:'Compromiso grave',c:C.r},{lo:9,hi:12,l:'Compromiso moderado',c:C.o},{lo:13,hi:15,l:'Compromiso leve',c:C.g}]},
+barthel:{n:'Barthel (dependencia)',min:0,max:100,info:'Mide la independencia en 10 actividades básicas de la vida diaria. Puntaje 0-100: a mayor puntaje, mayor independencia.',
+items:[['Comer',[['Independiente',10],['Necesita ayuda',5],['Dependiente',0]]],['Lavarse',[['Independiente',5],['Dependiente',0]]],['Vestirse',[['Independiente',10],['Necesita ayuda',5],['Dependiente',0]]],['Arreglarse',[['Independiente',5],['Dependiente',0]]],['Deposición',[['Continente',10],['Accidente ocasional',5],['Incontinente',0]]],['Micción',[['Continente',10],['Accidente ocasional',5],['Incontinente o sondado',0]]],['Uso del retrete',[['Independiente',10],['Necesita ayuda',5],['Dependiente',0]]],['Traslado sillón-cama',[['Independiente',15],['Mínima ayuda',10],['Gran ayuda',5],['Dependiente',0]]],['Deambulación',[['Independiente',15],['Necesita ayuda',10],['Silla de ruedas',5],['Dependiente',0]]],['Escaleras',[['Independiente',10],['Necesita ayuda',5],['Dependiente',0]]]],
+rng:[{lo:0,hi:19,l:'Dependencia total',c:C.d},{lo:20,hi:39,l:'Dependencia grave',c:C.r},{lo:40,hi:59,l:'Dependencia moderada',c:C.o},{lo:60,hi:99,l:'Dependencia leve',c:C.y},{lo:100,hi:100,l:'Independiente',c:C.g}]},
+morse:{n:'Morse (caídas)',min:0,max:125,info:'Evalúa el riesgo de caída con 6 ítems: antecedente de caídas, diagnóstico secundario, ayuda para deambular, vía venosa, marcha y estado mental. Puntaje 0-125.',
+items:[['Caídas en los últimos 3 meses',[['No',0],['Sí',25]]],['Diagnóstico secundario',[['No',0],['Sí',15]]],['Ayuda para deambular',[['Ninguna, reposo o ayuda de enfermería',0],['Muletas, bastón o andador',15],['Se apoya en los muebles',30]]],['Terapia endovenosa o vía venosa',[['No',0],['Sí',20]]],['Marcha',[['Normal, reposo o inmóvil',0],['Débil',10],['Alterada',20]]],['Estado mental',[['Consciente de sus limitaciones',0],['Olvida sus limitaciones',15]]]],
+rng:[{lo:0,hi:24,l:'Sin riesgo o riesgo bajo',c:C.g},{lo:25,hi:44,l:'Riesgo moderado',c:C.o},{lo:45,hi:125,l:'RIESGO ALTO',c:C.r}]},
+cam:{n:'CAM-ICU (delirium)',noScore:1,min:0,max:1,info:'Detecta delirium en pacientes críticos. Es positivo si hay cambio agudo o fluctuación (1) e inatención (2), y además pensamiento desorganizado (3) o nivel de conciencia alterado (4).',
+items:[['1. Cambio agudo o curso fluctuante',[['No',0],['Sí',1]]],['2. Inatención',[['No',0],['Sí',1]]],['3. Pensamiento desorganizado',[['No',0],['Sí',1]]],['4. Nivel de conciencia alterado (RASS distinto de 0)',[['No',0],['Sí',1]]]],
+fn:sel=>(sel[0]===1&&sel[1]===1&&(sel[2]===1||sel[3]===1))?1:0,np:1,
+rng:[{lo:0,hi:0,l:'CAM-ICU negativo',c:C.g},{lo:1,hi:1,l:'CAM-ICU POSITIVO: delirium',c:C.r}]},
+norton:{n:'Norton (LPP)',min:5,max:20,info:'Valora el riesgo de lesiones por presión con 5 ítems (estado físico, mental, actividad, movilidad e incontinencia). Puntaje 5-20: a menor puntaje, mayor riesgo.',
+items:[['Estado físico',[['Bueno',4],['Mediano',3],['Regular',2],['Muy malo',1]]],['Estado mental',[['Alerta',4],['Apático',3],['Confuso',2],['Estuporoso o comatoso',1]]],['Actividad',[['Ambulante',4],['Camina con ayuda',3],['Sentado',2],['Encamado',1]]],['Movilidad',[['Total',4],['Disminuida',3],['Muy limitada',2],['Inmóvil',1]]],['Incontinencia',[['Ninguna',4],['Ocasional',3],['Urinaria',2],['Urinaria y fecal',1]]]],
+rng:[{lo:5,hi:9,l:'RIESGO MUY ALTO',c:C.d},{lo:10,hi:12,l:'RIESGO ALTO',c:C.o},{lo:13,hi:14,l:'Riesgo medio',c:C.y},{lo:15,hi:20,l:'Riesgo mínimo',c:C.g}]},
+must:{n:'MUST (nutrición)',min:0,max:6,info:'Tamizaje de riesgo de desnutrición con 3 pasos: IMC, pérdida de peso no planificada en 3-6 meses y efecto de enfermedad aguda.',
+items:[['IMC',[['Mayor a 20',0],['18,5 a 20',1],['Menor a 18,5',2]]],['Pérdida de peso en 3-6 meses',[['Menos de 5%',0],['5% a 10%',1],['Más de 10%',2]]],['Enfermedad aguda y sin ingesta por más de 5 días',[['No',0],['Sí',2]]]],
+rng:[{lo:0,hi:0,l:'Riesgo bajo',c:C.g},{lo:1,hi:1,l:'Riesgo medio',c:C.y},{lo:2,hi:6,l:'RIESGO ALTO',c:C.r}]}
+};
+const res=(k,sel)=>{const s=SC[k];if(!sel||!s.items.every((_,i)=>sel[i]!==undefined))return null;const score=s.fn?s.fn(sel):s.items.reduce((a,it,i)=>a+it[1][sel[i]][1],0);const r=s.rng.find(g=>score>=g.lo&&score<=g.hi);return{score,r,txt:s.noScore?`${s.n}: ${r.l}`:`${s.n}: ${s.pre||''}${score}${s.pre?'':' pts'}, ${r.l}`}};
+
+const DEV={VVP:{lim:4,msg:'cambiar/evaluar VVP (>=72-96 h)'},CVC:{lim:7,msg:'revisar necesidad y sitio de CVC'},'CUP (Foley)':{lim:5,msg:'evaluar retiro de CUP'},'SNG/SNY':{lim:14,msg:'revisar/cambiar sonda'},'TOT/TQT':{lim:7,msg:'revisar fijacion y cuff'},'Linea arterial':{lim:7,msg:'evaluar retiro'},Drenaje:{lim:99,msg:''}};
+const AISL=['Estandar','Contacto','Gotitas','Aereo','Neutropenico'];
+const G=(l,o,m)=>({l,o,multi:!!m});
+const SIS={
+neuro:{n:'Neurológico',h:'CLOTE = Consciente, Lúcido, Orientado en Tiempo y Espacio (ya incluye vigil y orientado).',g:[G('Conciencia',['Vigil','Somnoliento','Estuporoso','Coma']),G('Orientación',['CLOTE','Orientado','Parcialmente orientado','Desorientado']),G('RASS',['RASS +4','RASS +3','RASS +2','RASS +1','RASS 0','RASS -1','RASS -2','RASS -3','RASS -4','RASS -5']),G('Otros',['Contención física con indicación médica','Pupilas isocóricas reactivas','Sedado'],1)]},
+resp:{n:'Respiratorio',h:'MAF: mascarilla de alto flujo. CNAF: cánula nasal de alto flujo. VMNI/VMI: ventilación mecánica no invasiva/invasiva.',g:[G('Patrón respiratorio',['Eupneico','Taquipneico','Bradipneico','Disnea']),G('Auscultación',['MP conservado','MP disminuido','Crepitantes','Sibilancias','Roncus'],1),G('Otros',['Tos','Secreciones','Tórax simétrico'],1)]},
+cv:{n:'Cardiovascular',g:[G('Presión arterial',['Normotenso','Hipertenso','Hipotenso']),G('Frecuencia',['Normocárdico','Taquicárdico','Bradicárdico']),G('Ritmo',['Ritmo sinusal','Fibrilación auricular','Otra arritmia']),G('Perfusión y soporte',['Uso de DVA','Pulsos periféricos presentes','Llene capilar < 2 s','Edema'],1)]},
+gi:{n:'Gastrointestinal / Eliminación',g:[G('Abdomen',['Blando depresible','Distendido','Doloroso a la palpación'],1),G('Ruidos hidroaéreos',['RHA presentes','RHA disminuidos','RHA ausentes']),G('Deposiciones',['Deposiciones normales','Sin deposiciones','Diarrea','Melena']),G('Diuresis (vía)',['Diuresis espontánea','Diuresis por CUP']),G('Diuresis (volumen)',['Diuresis conservada','Oliguria','Anuria']),G('Orina',['Orina clara','Orina turbia','Hematuria'])]},
+piel:{n:'Piel y curaciones',g:[G('Integridad',['Indemne']),G('LPP',['LPP grado I','LPP grado II','LPP grado III','LPP grado IV']),G('Herida operatoria',['Herida op. apósito limpio','Herida op. apósito manchado']),G('Otros',['Piel hidratada','Piel seca','Edema'],1)]}};
+const INC={};const X=(a,l)=>l.forEach(b=>{(INC[a]=INC[a]||new Set()).add(b);(INC[b]=INC[b]||new Set()).add(a)});
+X('CLOTE',['Vigil','Somnoliento','Estuporoso','Coma','RASS -3','RASS -4','RASS -5']);
+X('Estuporoso',['Orientado','Parcialmente orientado','Desorientado','RASS +4','RASS +3','RASS +2','RASS +1','RASS 0']);
+X('Coma',['Orientado','Parcialmente orientado','Desorientado','RASS +4','RASS +3','RASS +2','RASS +1','RASS 0','RASS -1','RASS -2']);
+X('Somnoliento',['RASS +4','RASS +3','RASS +2']);X('Vigil',['RASS -3','RASS -4','RASS -5']);
+X('MP conservado',['MP disminuido','Crepitantes','Sibilancias','Roncus']);
+X('Hipertenso',['Uso de DVA']);X('Blando depresible',['Distendido','Doloroso a la palpación']);
+X('Anuria',['Orina clara','Orina turbia','Hematuria']);
+X('Indemne',['LPP grado I','LPP grado II','LPP grado III','LPP grado IV','Herida op. apósito limpio','Herida op. apósito manchado']);
+X('Piel hidratada',['Piel seca']);
+const O2={'Ambiental':{},'Naricera':{l:[1,6],f:1},'Mascarilla Venturi':{l:[2,12],v:1},'MAF':{l:[10,15],f:1},'CNAF':{l:[20,60],f:1},'VMNI':{f:1,x:['IPAP','EPAP']},'VMI':{f:1,x:['PEEP']}};
+const VEN={24:2,28:4,31:6,35:8,40:10,50:12};
+const hasD=(p,t)=>p.dev.some(d=>d.t===t);
+const devRule=(p,x)=>x==='Diuresis por CUP'&&!hasD(p,'CUP (Foley)')?'Requiere CUP registrado en dispositivos':x==='Diuresis espontánea'&&hasD(p,'CUP (Foley)')?'Hay CUP registrado':'';
+const blocked=(p,k,x)=>{const dr=devRule(p,x);if(dr)return dr;const g=SIS[k].g.find(g=>g.o.includes(x));const s=(p.sis[k]||[]).find(y=>!(!g.multi&&g.o.includes(y))&&INC[y]&&INC[y].has(x));return s?'Incompatible con '+s:''};
+const tog=(p,k,x,up)=>{const sel=p.sis[k]||[];const g=SIS[k].g.find(g=>g.o.includes(x));const n=sel.includes(x)?sel.filter(y=>y!==x):[...(g.multi?sel:sel.filter(y=>!g.o.includes(y))),x];up({sis:{...p.sis,[k]:n}})};
+const o2Txt=p=>{const o=p.o2||{},c=O2[o.s]||{},a=[];if(o.s)a.push(o.s==='Ambiental'?'aire ambiental, FiO2 21%':o.s+(o.l?' '+o.l+' L/min':'')+(o.f?', FiO2 '+o.f+'%':''));(c.x||[]).forEach(k=>o.x&&o.x[k]&&a.push(k+' '+o.x[k]+' cmH2O'));if(o.sat)a.push('SatO2 '+o.sat+'%');return a.join(', ')};
+const PEND=['Examenes de laboratorio pendientes','Imagenologia (TAC/Eco/Rx)','Interconsultas','Ayuno para procedimiento/pabellon','Transfusiones','Tramites alta/epicrisis'];
+
+const newP=(o={})=>({id:Math.random().toString(36).slice(2),bed:'',ini:'',edad:'',sexo:'',dh:'',dx:'',medico:'',alergias:'',aisl:'Estandar',estado:'',reg:'',mov:'',dev:[],sis:{neuro:[],resp:[],cv:[],gi:[],piel:[]},sisT:{},o2:{},meds:[],vs:[],bh:{peso:'',hrs:'12',e:[]},tasks:[],ronda:[],rondas:[],procs:[],pr:{t:'',ok:[]},next:'',draft:{},cud:{},ev:{},pend:[],sc:{},obs:'',...o});
+const seed=()=>[
+newP({bed:'401-A',ini:'J.M.',edad:'58',sexo:'M',dh:'2',dx:'POP colecistectomia laparoscopica',medico:'Equipo Cirugia',estado:'Estable',reg:'Liviano',mov:'Levantada asistida',dev:[{t:'VVP',f:iso(2),d:'20G antebrazo derecho'},{t:'Drenaje',f:iso(1),d:'Jackson-Pratt, debito seroso escaso'}],sis:{neuro:['CLOTE','RASS 0'],resp:['Eupneico','MP conservado'],cv:['Normotenso','Normocárdico','Ritmo sinusal'],gi:['Blando depresible','RHA presentes','Sin deposiciones','Diuresis espontánea','Diuresis conservada','Orina clara'],piel:['Herida op. apósito limpio']},sisT:{piel:'Ultima curacion hace 24 h'},o2:{s:'Ambiental',f:'21',sat:'96'},meds:[{id:'m0',n:'Paracetamol 1 g EV',fr:8,lock:''},{id:'m1',n:'Ketoprofeno 100 mg EV',fr:12,lock:''},{id:'m2',n:'Enoxaparina 40 mg SC',fr:24,lock:''},{id:'m3',n:'Omeprazol 40 mg EV',fr:24,lock:''}],pend:['Examenes de laboratorio pendientes'],vs:[{id:'v1',t:'07:10',pas:'124',pad:'76',fc:'78',fr:'16',sat:'97',tp:'36.6',av:'A',gl:'',o2:false}],tasks:[{id:'t1',n:'Control de signos vitales',ev:4,due:nextOdd()},{id:'t2',n:'Curacion herida operatoria',ev:24,due:nextOdd()+36e5*2}],cud:{r:'C',d:'3'},sc:{eva:{0:3},braden:{0:3,1:3,2:2,3:2,4:2,5:2}},obs:'Control de signos vitales cada 4 h. Manejo del dolor segun indicacion.'}),
+newP({bed:'402-B',ini:'R.P.',edad:'76',sexo:'F',dh:'6',dx:'Neumonia + ITU asociada a CUP, BLEE',medico:'Equipo Medicina Interna',alergias:'Penicilina',aisl:'Contacto',estado:'De cuidado',reg:'Hiposodico',mov:'Reposo relativo',dev:[{t:'CUP (Foley)',f:iso(6),d:'N 16, orina turbia'},{t:'VVP',f:iso(5),d:'22G mano izquierda'}],sis:{neuro:['Somnoliento','Desorientado','RASS -1'],resp:['Taquipneico','Crepitantes','Tos'],cv:['Normotenso','Taquicárdico','Ritmo sinusal'],gi:['Blando depresible','RHA presentes','Sin deposiciones','Diuresis por CUP','Diuresis conservada','Orina turbia'],piel:['LPP grado II']},sisT:{piel:'LPP sacro 3x2 cm'},o2:{s:'Naricera',l:'2',f:'28',sat:'93'},meds:[{id:'m0',n:'Meropenem 1 g EV',fr:8,lock:''},{id:'m1',n:'Paracetamol 1 g EV',fr:6,lock:''},{id:'m2',n:'Furosemida 20 mg EV',fr:12,lock:''},{id:'m3',n:'Enoxaparina 40 mg SC',fr:24,lock:''},{id:'m4',n:'Omeprazol 20 mg VO',fr:24,lock:''},{id:'m5',n:'Salbutamol 2 puff inh',fr:0,lock:''}],pend:['Interconsultas','Imagenologia (TAC/Eco/Rx)'],vs:[{id:'v2',t:'07:20',pas:'112',pad:'64',fc:'104',fr:'20',sat:'94',tp:'38.2',av:'A',gl:'',o2:true}],bh:{peso:'68',hrs:'12',e:[{k:'ing',tp:'Endovenoso',ml:'800'},{k:'ing',tp:'Oral',ml:'400'},{k:'egr',tp:'Diuresis',ml:'350'}]},tasks:[{id:'t3',n:'Cambio de posicion',ev:2,due:nextOdd()},{id:'t4',n:'Control de glicemia',ev:6,due:nextOdd()+36e5*2}],cud:{r:'B',d:'1'},sc:{downton:{0:1,1:1,2:0,3:1,4:2},braden:{0:2,1:2,2:1,3:2,4:2,5:1}},obs:'Mantener aislamiento de contacto. Cambios de posicion cada 2 h.'})];
+const fix=p=>{const n={...newP(),...p,o2:p.o2||{},sc:{...p.sc},sis:{}};Object.keys(SIS).forEach(k=>{const ok=SIS[k].g.flatMap(g=>g.o);n.sis[k]=((p.sis||{})[k]||[]).filter(x=>ok.includes(x))});return n};
+const load=()=>{try{const raw=localStorage.getItem(KEY);let s=raw?JSON.parse(raw):null;if(s&&s.enc){ENC_BLOB=raw;return [newP({bed:'1'})]}if(!s){const o=JSON.parse(localStorage.getItem(OLD));if(o&&o.length){s=o.map(fix);s.forEach(x=>delete x.sc.downton);localStorage.removeItem(OLD)}}if(s&&s.length)return s}catch(e){}return seed()};
+
+function Chips({o,v,on,multi,dis,lab,tg}){const has=x=>multi?v.includes(x):v===x;
+return <div className="flex flex-wrap gap-1.5">{o.map(x=>{const r=dis&&!has(x)?dis(x):'';return <button key={x} disabled={!!r} title={r} onClick={()=>tg?tg(x):on(multi?(has(x)?v.filter(y=>y!==x):[...v,x]):(v===x?'':x))} className={'px-2.5 py-1 rounded-full text-sm border transition '+(r?'opacity-40 cursor-not-allowed line-through border-slate-300 dark:border-slate-600':has(x)?'bg-teal-700 border-teal-700 text-white':'border-slate-300 dark:border-slate-600 hover:border-teal-600')}>{lab?lab(x):x}</button>})}</div>}
+function O2c({p,up}){const o=p.o2||{},c=O2[o.s]||{},set=x=>up({o2:{...o,...x}});
+const dis=x=>x==='VMI'&&!hasD(p,'TOT/TQT')?'Requiere TOT/TQT registrado en dispositivos':x==='VMNI'&&hasD(p,'TOT/TQT')?'Incompatible con TOT/TQT':'';
+const est=o.s==='Naricera'&&o.l?21+4*Number(o.l):0;
+return <L t="Aporte de oxígeno (uno solo)"><div className="space-y-2">
+<Chips o={Object.keys(O2)} v={o.s||''} dis={dis} on={x=>set({s:x,l:'',f:x==='Ambiental'?'21':'',x:{}})}/>
+{c.v&&<L t="FiO2 Venturi (flujo sugerido)"><Chips o={Object.keys(VEN)} v={o.f||''} lab={x=>x+'% ('+VEN[x]+' L/min)'} on={x=>set({f:x,l:x?String(VEN[x]):''})}/></L>}
+<div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+{c.l&&<L t={'Litros (L/min) '+c.l[0]+'-'+c.l[1]}><In type="number" value={o.l||''} onChange={e=>set({l:e.target.value})}/></L>}
+{c.f&&<L t={'FiO2 otorgada (%)'+(est?', est. '+est:'')}><In type="number" value={o.f||''} placeholder={est?String(est):''} onChange={e=>set({f:e.target.value})}/></L>}
+{(c.x||[]).map(k=><L key={k} t={k+' (cmH2O)'}><In type="number" value={(o.x||{})[k]||''} onChange={e=>set({x:{...o.x,[k]:e.target.value}})}/></L>)}
+<L t="SatO2 (%)"><In type="number" value={o.sat||''} onChange={e=>set({sat:e.target.value})}/></L></div>
+{o.s==='Ambiental'&&<p className="text-xs text-slate-500">Aire ambiental: FiO2 21%.</p>}</div></L>}
+const NORMAL={neuro:['CLOTE','RASS 0'],resp:['Eupneico','MP conservado'],cv:['Normotenso','Normocárdico','Ritmo sinusal'],gi:['Blando depresible','RHA presentes','Deposiciones normales','Diuresis espontánea','Diuresis conservada','Orina clara'],piel:['Indemne']};
+function Sis({p,up}){const setN=ks=>{const sis={...p.sis};ks.forEach(k=>{sis[k]=NORMAL[k].filter(x=>!devRule(p,x))});const pa={sis};if(ks.includes('resp')&&!(p.o2&&p.o2.s))pa.o2={...(p.o2||{}),s:'Ambiental',f:'21'};up(pa)};
+return <Card t="B - Evaluación por sistemas"><div className="flex flex-wrap gap-2"><button onClick={()=>setN(Object.keys(SIS))} className="text-sm rounded-lg bg-teal-700 text-white px-3 py-1.5">Marcar todo normal</button>{p.prev&&<button onClick={()=>up({sis:p.prev.sis,o2:p.prev.o2,estado:p.prev.estado})} className="text-sm rounded-lg border border-slate-400 px-3 py-1.5">Copiar turno anterior</button>}</div>{Object.keys(SIS).map(k=>{const S=SIS[k],sel=p.sis[k]||[];return <div key={k} className="space-y-2 pb-4 border-b last:border-0 border-slate-200 dark:border-slate-800">
+<div className="flex items-center gap-2"><span className="font-medium">{S.n}</span><button onClick={()=>setN([k])} className="text-xs rounded-full border border-teal-600 text-teal-700 dark:text-teal-300 px-2 py-0.5">Normal</button></div>{S.h&&<p className="text-xs text-slate-500">{S.h}</p>}
+{k==='resp'&&<O2c p={p} up={up}/>}
+{S.g.map(g=><L key={g.l} t={g.l+(g.multi?' (varias)':' (una)')}><Chips multi o={g.o} v={sel} tg={x=>tog(p,k,x,up)} dis={x=>blocked(p,k,x)}/></L>)}
+<In placeholder="Detalle libre (ubicación, fecha de curación, secreciones...)" value={p.sisT[k]||''} onChange={e=>up({sisT:{...p.sisT,[k]:e.target.value}})}/></div>})}</Card>}
+const Card=({t,children})=><section className="rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 space-y-3"><h3 className="font-semibold text-teal-800 dark:text-teal-400">{t}</h3>{children}</section>;
+const L=({t,children})=><div><div className="text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">{t}</div>{children}</div>;
+const In=p=><input {...p} className={'w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-transparent px-2.5 py-1.5 text-sm '+(p.className||'')}/>;
+
+const flags=p=>{const f=[];const d=res('downton',p.sc.downton),b=res('braden',p.sc.braden);
+if(d&&d.score>=3)f.push(['Caida alto','bg-amber-500']);if(b&&b.score<=12)f.push(['LPP alto','bg-orange-600']);
+if(p.aisl!=='Estandar')f.push(['Aisl. '+p.aisl,'bg-purple-600']);if(p.pend.length)f.push(['Pend. '+p.pend.length,'bg-sky-600']);
+if(p.alergias)f.push(['Alergia','bg-red-600']);const lv=(p.vs||[]).slice(-1)[0],nw=lv?news(lv):null;if(nw&&nw.t>=5)f.push(['NEWS2 '+nw.t,nw.t>=7?'bg-red-600':'bg-orange-600']);const od=(p.tasks||[]).filter(t=>t.due<Date.now()).length;if(od)f.push(['Tareas '+od,'bg-rose-600']);if(allergyHits(p).length)f.push(['Fárm./alergia','bg-red-700']);return f};
+
+const devLines=p=>p.dev.map(x=>{const n=days(x.f),i=DEV[x.t]||{lim:99,msg:''};return `${x.t}${x.d?' ('+x.d+')':''}, instalado ${x.f.split('-').reverse().join('/')}, dia ${n+1}${n>=i.lim?' - ALERTA: '+i.msg:''}`});
+const scLines=p=>Object.keys(SC).map(k=>res(k,p.sc[k])).filter(Boolean).map(r=>r.txt);
+const sisItems=(p,k)=>{const sel=p.sis[k]||[];return SIS[k].g.flatMap(g=>g.o.filter(x=>sel.includes(x)))};
+const sisLine=(p,k)=>[...sisItems(p,k),k==='resp'?o2Txt(p):'',p.sisT[k]].filter(Boolean).join(', ');
+
+const SL=[7,9,11,13,15,17,19,21,23,1,3,5],ORD=[...Array(24)].map((_,i)=>(i+7)%24);
+const FR=[[24,'c/24 h'],[12,'c/12 h'],[8,'c/8 h'],[6,'c/6 h'],[4,'c/4 h'],[0,'SOS / continuo']];
+const hh=h=>String(h).padStart(2,'0')+':00';
+const isLock=m=>m.lock!==''&&m.lock!==undefined&&m.lock!==null;
+const hrsOf=(s,fr)=>fr?Array.from({length:24/fr},(_,i)=>(s+i*fr)%24):[];
+const plan=ms=>{const load=Array(24).fill(0),hr={};
+ms.filter(m=>m.fr&&isLock(m)).forEach(m=>{const h=hrsOf(Number(m.lock),m.fr);hr[m.id]=h;h.forEach(x=>load[x]++)});
+ms.filter(m=>m.fr&&!isLock(m)).sort((a,b)=>a.fr-b.fr).forEach(m=>{let best=null,bc=1e9;SL.forEach(s=>{const h=hrsOf(s,m.fr);const c=Math.max(...h.map(x=>load[x]))*1000+h.reduce((a,x)=>a+load[x],0);if(c<bc){bc=c;best=h}});hr[m.id]=best;best.forEach(x=>load[x]++)});
+Object.keys(hr).forEach(k=>{hr[k]=[...hr[k]].sort((a,b)=>ORD.indexOf(a)-ORD.indexOf(b))});return{hr,load}};
+const farm=p=>{const ms=p.meds||[],{hr}=plan(ms),o=[`HORARIO DE FARMACOS - Cama ${p.bed||'-'} (${p.ini||'-'})`,'Dosis distribuidas en horas impares para repartir la carga.'];
+ORD.forEach(h=>{const t=ms.filter(m=>(hr[m.id]||[]).includes(h)).map(m=>m.n);if(t.length)o.push(`${hh(h)} (${t.length}): ${t.join('; ')}`)});
+const sos=ms.filter(m=>!m.fr).map(m=>m.n);if(sos.length)o.push('SOS/continuo: '+sos.join('; '));if(!ms.length)o.push('Sin farmacos registrados');return clean(o.join('\n'))};
+const isbar=p=>clean([
+`ENTREGA DE TURNO - ISBAR`,
+`I - IDENTIFICACION`,
+`- Cama/Box ${p.bed||'-'} | Pac. ${p.ini||'-'} | ${p.edad||'-'} anos ${p.sexo||''} | Dia hosp. ${p.dh||'-'}`,
+`- Dx: ${p.dx||'-'} | Equipo: ${p.medico||'-'}`,
+`- ALERGIAS: ${p.alergias||'No conocidas'}`,
+`- Precauciones IAAS: ${p.aisl}`,
+`S - SITUACION ACTUAL`,
+`- Estado: ${p.estado||'-'} | Regimen: ${p.reg||'-'} | Movilidad: ${p.mov||'-'}`,
+`A - ANTECEDENTES / DISPOSITIVOS`,
+...(p.dev.length?devLines(p).map(x=>'- '+x):['- Sin dispositivos invasivos']),
+`B - EVALUACION POR SISTEMAS`,
+...Object.keys(SIS).map(k=>`- ${SIS[k].n}: ${sisLine(p,k)||'sin datos'}`),
+...(scLines(p).length?['- Escalas:',...scLines(p).map(x=>'  * '+x)]:[]),
+...extraLines(p),
+`R - RECOMENDACIONES / PENDIENTES`,
+...(p.pend.length?p.pend.map(x=>'- '+x):['- Sin pendientes criticos']),
+...(p.obs?['- Obs: '+p.obs]:[]),...(p.next?['>> PARA EL PROXIMO TURNO: '+p.next]:[])].join('\n'));
+
+const evol=p=>{const t=k=>sisLine(p,k);
+const parts=[`NOTA DE EVOLUCION DE ENFERMERIA`,
+`Paciente ${p.sexo==='F'?'femenina':p.sexo==='M'?'masculino':''} de ${p.edad||'-'} anos, iniciales ${p.ini||'-'}, cama ${p.bed||'-'}, dia ${p.dh||'-'} de hospitalizacion, con diagnostico de ${p.dx||'-'}. Alergias: ${p.alergias||'no conocidas'}. Precauciones: ${p.aisl}. Se evalua en estado ${(p.estado||'-').toLowerCase()}.`,
+`Neurologico: ${t('neuro')||'sin datos'}. Respiratorio: ${t('resp')||'sin datos'}. Cardiovascular: ${t('cv')||'sin datos'}. Abdomen/eliminacion: ${t('gi')||'sin datos'}. Piel: ${t('piel')||'sin datos'}.`,
+`Regimen ${p.reg||'-'}, movilidad: ${(p.mov||'-').toLowerCase()}.`,
+p.dev.length?`Dispositivos: ${devLines(p).join('; ')}.`:'Sin dispositivos invasivos.',
+scLines(p).length?`Escalas aplicadas: ${scLines(p).join('; ')}.`:'',
+extraLines(p).length?extraLines(p).map(x=>x.replace(/^- /,'')).join('. ')+'.':'',
+p.pend.length?`Pendientes: ${p.pend.join('; ').toLowerCase()}.`:'',p.obs?`Observaciones: ${p.obs}`:'',
+`Se mantiene plan de cuidados y vigilancia segun indicacion.`];
+return clean(parts.filter(Boolean).join('\n\n'))};
+
+function Scales({p,up}){const [k,setK]=useState('downton');const s=SC[k],sel=p.sc[k]||{},r=res(k,sel),tot=s.max-s.min+1;
+return <Card t="Escalas (se inyectan al registro)">
+<div className="flex flex-wrap gap-1.5">{Object.keys(SC).map(x=><button key={x} onClick={()=>setK(x)} className={'px-2.5 py-1 rounded-lg text-sm border '+(k===x?'bg-slate-800 text-white dark:bg-slate-200 dark:text-slate-900':'border-slate-300 dark:border-slate-600')}>{SC[x].n.split(' (')[0]}{res(x,p.sc[x])?' ✓':''}</button>)}</div>
+<p className="text-sm text-slate-600 dark:text-slate-300">{s.info}</p>
+{s.items.map((it,i)=><L key={i} t={it[0]}><Chips o={it[1].map(o=>o[0])} v={sel[i]===undefined?'':it[1][sel[i]][0]} lab={x=>s.np?x:x+' ('+it[1].find(o=>o[0]===x)[1]+')'} on={x=>{const n={...sel};if(x==='')delete n[i];else n[i]=it[1].findIndex(o=>o[0]===x);up({sc:{...p.sc,[k]:n}})}}/></L>)}
+<div className={'rounded-lg px-3 py-2 text-sm font-medium '+(r?'bg-teal-50 dark:bg-teal-950 text-teal-900 dark:text-teal-200':'bg-slate-100 dark:bg-slate-800 text-slate-500')}>{r?r.txt:'Completa todos los items para calcular.'}</div>
+<div className="rounded-lg border border-slate-200 dark:border-slate-700 p-3">
+<div className="relative pt-7"><div className="flex h-3 rounded overflow-hidden">{s.rng.map((g,i)=><div key={i} style={{flex:g.hi-g.lo+1,background:g.c,opacity:!r||r.r===g?1:.4}} className="border-r border-white dark:border-slate-900"/>)}</div>
+{r&&!s.noScore&&<div className="absolute top-0 text-xs font-bold text-center -translate-x-1/2" style={{left:((r.score-s.min+.5)/tot*100)+'%'}}>{r.score}<div className="leading-none">▼</div></div>}</div>
+<div className="flex justify-between text-xs text-slate-500 mt-1"><span>{s.min}</span><span>{s.max}</span></div>
+<ul className="mt-2 space-y-1 text-sm">{s.rng.map((g,i)=><li key={i} className={'flex items-center gap-2 rounded px-2 py-0.5 '+(r&&r.r===g?'bg-slate-100 dark:bg-slate-800 font-semibold':'')}><span className="w-3 h-3 rounded-sm shrink-0" style={{background:g.c}}/><span className="w-12 shrink-0 tabular-nums">{g.lo===g.hi?g.lo:g.lo+'-'+g.hi}</span><span>{g.l}</span></li>)}</ul></div></Card>}
+
+function Farm({p,up}){const ms=p.meds||[];const [nd,setNd]=useDraft(p,up,'farm',{n:'',fr:8,lock:''});
+const {hr,load}=useMemo(()=>plan(ms),[ms]);const mx=Math.max(...load),peak=ORD.find(h=>load[h]===mx);
+const set=(id,patch)=>up({meds:ms.map(m=>m.id===id?{...m,...patch}:m)});
+const add=()=>{if(!nd.n.trim())return;up({meds:[...ms,{...nd,id:Math.random().toString(36).slice(2)}]});setNd({...nd,n:''})};
+const dosis=load.reduce((a,b)=>a+b,0);
+return <Card t="Fármacos (ordenador de horarios)">
+{allergyHits(p).map((a,i)=><div key={i} className="rounded-lg bg-red-600 text-white text-sm px-3 py-2 flex items-center gap-2"><Ic d={P.warn}/>ALERTA ALERGIA: {a.m} - {a.w}</div>)}
+<p className="text-xs text-slate-500">Reparte las dosis en horas impares (7, 9, 11... 5) para no concentrar todo a la misma hora. Puedes fijar la hora de inicio de un fármaco y el resto se reordena solo.</p>
+<div className="grid grid-cols-2 sm:grid-cols-4 gap-2 items-end">
+<div className="col-span-2"><L t="Fármaco, dosis y vía"><In value={nd.n} placeholder="Ej: Paracetamol 1 g EV" onChange={e=>setNd({...nd,n:e.target.value})} onKeyDown={e=>e.key==='Enter'&&add()}/></L></div>
+<L t="Frecuencia"><select value={nd.fr} onChange={e=>setNd({...nd,fr:Number(e.target.value)})} className="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-transparent px-2 py-1.5 text-sm">{FR.map(([v,l])=><option key={v} value={v} className="text-black">{l}</option>)}</select></L>
+<button onClick={add} className="rounded-lg bg-teal-700 text-white text-sm py-1.5 flex items-center justify-center gap-1"><Ic d={P.plus}/>Agregar</button></div>
+{ms.map(m=><div key={m.id} className="rounded-lg border border-slate-200 dark:border-slate-700 px-3 py-2 text-sm flex flex-wrap items-center gap-2">
+<div className="flex-1 min-w-[10rem]"><b>{m.n}</b> <span className="text-slate-500">{FR.find(f=>f[0]===m.fr)[1]}</span>
+<div className="flex flex-wrap gap-1 mt-1">{m.fr?(hr[m.id]||[]).map(h=><span key={h} className={'px-1.5 rounded text-xs '+(isLock(m)?'bg-amber-200 dark:bg-amber-800':'bg-teal-100 dark:bg-teal-900')}>{hh(h)}</span>):<span className="text-xs text-slate-500">Sin horario fijo</span>}</div></div>
+{m.fr>0&&<select value={isLock(m)?m.lock:''} onChange={e=>set(m.id,{lock:e.target.value===''?'':Number(e.target.value)})} className="rounded-lg border border-slate-300 dark:border-slate-700 bg-transparent px-2 py-1 text-xs"><option value="" className="text-black">Hora auto</option>{ORD.map(h=><option key={h} value={h} className="text-black">Fijar {hh(h)}</option>)}</select>}
+<button aria-label="Quitar" onClick={()=>up({meds:ms.filter(x=>x.id!==m.id)})}><Ic d={P.trash}/></button></div>)}
+{dosis>0&&<div><div className="text-sm font-medium mb-1">Dosis por hora ({dosis} al día). Máximo simultáneo: {mx} a las {hh(peak)}</div>
+<div className="flex items-end gap-0.5">{ORD.map(h=><div key={h} className="flex-1 flex flex-col items-center justify-end"><span className="text-[10px] h-3">{load[h]||''}</span><div style={{height:(load[h]/mx*56)+'px'}} className={'w-full rounded-t '+(h%2?'bg-teal-600':'bg-amber-500')}/><span className="text-[10px] text-slate-500">{h}</span></div>)}</div>
+<p className="text-xs text-slate-500 mt-1">Barras verdes: horas impares. Naranjas: horas pares (solo por hora fijada manualmente).</p></div>}</Card>}
+function Form({p,up,sm}){const [nd,setNd]=useDraft(p,up,'dev',{t:'VVP',f:iso(0),d:''});
+return <div className="space-y-4">
+<Cambios p={p}/>
+<Card t="I - Identificacion"><div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+<L t="Cama / Box"><In value={p.bed} onChange={e=>up({bed:e.target.value})}/></L>
+<L t="Iniciales"><In value={p.ini} maxLength={4} onChange={e=>up({ini:e.target.value.toUpperCase()})}/></L>
+<L t="Edad"><In type="number" value={p.edad} onChange={e=>up({edad:e.target.value})}/></L>
+<L t="Dias hosp."><In type="number" value={p.dh} onChange={e=>up({dh:e.target.value})}/></L></div>
+<L t="Sexo"><Chips o={['F','M']} v={p.sexo} on={x=>up({sexo:x})}/></L>
+<L t="Diagnostico medico principal"><In value={p.dx} onChange={e=>up({dx:e.target.value})}/></L>
+<L t="Medico tratante / equipo"><In value={p.medico} onChange={e=>up({medico:e.target.value})}/></L>
+<L t="Alergias conocidas"><In value={p.alergias} onChange={e=>up({alergias:e.target.value})} className={p.alergias?'border-red-500 bg-red-50 dark:bg-red-950 text-red-700 dark:text-red-300 font-semibold':''}/></L>
+<L t="Precauciones / aislamiento IAAS"><Chips o={AISL} v={p.aisl} on={x=>up({aisl:x||'Estandar'})}/></L></Card>
+<Card t="S - Situacion actual">
+<L t="Estado general"><Chips o={['Estable','De cuidado','Grave','Critico']} v={p.estado} on={x=>up({estado:x})}/></L>
+<L t="Regimen"><Chips o={['Regimen 0','Hidrico','Liviano','Diabetico','Hiposodico','Enteral SNG/SNY','Parenteral']} v={p.reg} on={x=>up({reg:x})}/></L>
+<L t="Movilidad"><Chips o={['Reposo absoluto','Reposo relativo','Levantada asistida']} v={p.mov} on={x=>up({mov:x})}/></L></Card>
+<Card t="A - Dispositivos invasivos (IAAS)">
+{p.dev.map((x,i)=>{const n=days(x.f),I=DEV[x.t]||{lim:99},al=n>=I.lim;return <div key={i} className={'flex items-center gap-2 rounded-lg border px-3 py-2 text-sm '+(al?'border-red-400 bg-red-50 dark:bg-red-950':'border-slate-200 dark:border-slate-700')}>
+<div className="flex-1"><b>{x.t}</b> {x.d} <span className="text-slate-500">· dia {n+1}</span>{al&&<div className="text-red-700 dark:text-red-300 font-medium flex items-center gap-1"><Ic d={P.warn}/>{I.msg}</div>}</div>
+<button aria-label="Quitar" onClick={()=>up({dev:p.dev.filter((_,j)=>j!==i)})}><Ic d={P.trash}/></button></div>})}
+<div className="grid grid-cols-2 sm:grid-cols-4 gap-2 items-end">
+<L t="Tipo"><select value={nd.t} onChange={e=>setNd({...nd,t:e.target.value})} className="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-transparent px-2 py-1.5 text-sm">{Object.keys(DEV).map(x=><option key={x} className="text-black">{x}</option>)}</select></L>
+<L t="Instalacion"><In type="date" value={nd.f} onChange={e=>setNd({...nd,f:e.target.value})}/></L>
+<L t="Detalle (calibre, sitio, lumenes)"><In value={nd.d} onChange={e=>setNd({...nd,d:e.target.value})}/></L>
+<button onClick={()=>{up({dev:[...p.dev,nd]});setNd({...nd,d:''})}} className="rounded-lg bg-teal-700 text-white text-sm py-1.5 flex items-center justify-center gap-1"><Ic d={P.plus}/>Agregar</button></div>
+<p className="text-xs text-slate-500">Plazos de alerta referenciales; valida con la norma IAAS de tu establecimiento.</p></Card>
+<Sis p={p} up={up}/>
+<VS p={p} up={up}/>
+<BH p={p} up={up}/>
+<Scales p={p} up={up}/>
+<Farm p={p} up={up}/>
+<Tasks p={p} up={up}/>
+<Ronda p={p} up={up}/>
+<Proc p={p} up={up}/>
+<Cudyr p={p} up={up}/>
+<Evento p={p} up={up} sm={sm}/>
+<Prox p={p} up={up}/>
+<Card t="R - Recomendaciones y pendientes"><Chips multi o={PEND} v={p.pend} on={x=>up({pend:x})}/>
+<L t="Observaciones"><textarea rows={2} value={p.obs} onChange={e=>up({obs:e.target.value})} className="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-transparent px-2.5 py-1.5 text-sm"/><Mic onText={t=>up({obs:(p.obs?p.obs+' ':'')+t})}/></L></Card></div>}
+
+const useNow=(ms=30000)=>{const [n,setN]=useState(Date.now());useEffect(()=>{const i=setInterval(()=>setN(Date.now()),ms);return()=>clearInterval(i)},[]);return n};
+const nextOdd=()=>{const d=new Date();d.setMinutes(0,0,0);d.setHours(d.getHours()+1);if(d.getHours()%2===0)d.setHours(d.getHours()+1);return d.getTime()};
+const hm=ms=>new Date(ms).toTimeString().slice(0,5);
+const norm=x=>(x||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+const FAM={penicilina:['penicilina','amoxicilina','ampicilina','piperacilina','cloxacilina','augmentin','clavulan'],aine:['aine','ketoprofeno','ibuprofeno','diclofenaco','ketorolaco','naproxeno','aspirina','acetilsalicilico'],sulfa:['sulfa','cotrimoxazol','trimetoprim'],dipirona:['dipirona','metamizol'],opioide:['opioide','morfina','tramadol','codeina','fentanilo','petidina'],macrolido:['macrolido','azitromicina','claritromicina','eritromicina'],quinolona:['quinolona','ciprofloxacino','levofloxacino'],cefalosporina:['cefalosporina','ceftriaxona','cefazolina','cefuroxima','cefepime','ceftazidima','cefotaxima']};
+const allergyHits=p=>{const a=norm(p.alergias);if(!a)return[];const out=[];(p.meds||[]).forEach(m=>{const n=norm(m.n);Object.keys(FAM).forEach(k=>{if((a.includes(k)||FAM[k].some(t=>a.includes(t)))&&FAM[k].some(t=>n.includes(t))&&!out.some(o=>o.m===m.n))out.push({m:m.n,w:'alergia registrada ('+p.alergias+'), familia '+k})});if(/penicil|amoxi|ampi/.test(a)&&/cef/.test(n)&&!out.some(o=>o.m===m.n))out.push({m:m.n,w:'posible reactividad cruzada con penicilinas (confirmar)'});a.split(/[^a-z]+/).filter(w=>w.length>4).forEach(w=>{if(n.includes(w)&&!out.some(o=>o.m===m.n))out.push({m:m.n,w:'coincide con alergia registrada ('+p.alergias+')'})})});return out};
+const news=v=>{const n=x=>x===''||x===undefined||isNaN(Number(x))?null:Number(x);const sc=(x,r)=>x===null?0:(r.find(([lo,hi])=>x>=lo&&x<=hi)||[0,0,0])[2];
+const parts={FR:sc(n(v.fr),[[-1e9,8,3],[9,11,1],[12,20,0],[21,24,2],[25,1e9,3]]),SpO2:sc(n(v.sat),[[-1e9,91,3],[92,93,2],[94,95,1],[96,1e9,0]]),O2:v.o2?2:0,PAS:sc(n(v.pas),[[-1e9,90,3],[91,100,2],[101,110,1],[111,219,0],[220,1e9,3]]),FC:sc(n(v.fc),[[-1e9,40,3],[41,50,1],[51,90,0],[91,110,1],[111,130,2],[131,1e9,3]]),Conciencia:v.av&&v.av!=='A'?3:0,T:sc(n(v.tp),[[-1e9,35,3],[35.0001,36,1],[36.0001,38,0],[38.0001,39,1],[39.0001,1e9,2]])};
+const t=Object.values(parts).reduce((a,b)=>a+b,0),any3=Object.values(parts).includes(3);
+const lvl=t>=7?['ALTO (respuesta de emergencia)','#dc2626']:t>=5?['MEDIO (valoración urgente por médico)','#ea580c']:any3?['BAJO-MEDIO (un parámetro en 3: revisión urgente)','#eab308']:['BAJO','#16a34a'];
+return{t,parts,lvl:lvl[0],col:lvl[1]}};
+const lastVS=p=>(p.vs||[]).slice(-1)[0]||null;
+const vsTxt=p=>{const v=lastVS(p);if(!v)return '';const r=news(v);return `SV ${v.t}: PA ${v.pas||'-'}/${v.pad||'-'}, FC ${v.fc||'-'}, FR ${v.fr||'-'}, SatO2 ${v.sat||'-'}%, T ${v.tp||'-'} C${v.gl?', HGT '+v.gl:''}; NEWS2 ${r.t} (${r.lvl})`};
+const bhSum=p=>{const b=p.bh||{e:[]},e=b.e||[],s=k=>e.filter(x=>x.k===k).reduce((a,x)=>a+Number(x.ml||0),0),diu=e.filter(x=>x.tp==='Diuresis').reduce((a,x)=>a+Number(x.ml||0),0),ing=s('ing'),egr=s('egr');return{ing,egr,bal:ing-egr,diu,dk:b.peso&&b.hrs&&diu?diu/(Number(b.peso)*Number(b.hrs)):null}};
+const bhTxt=p=>{const r=bhSum(p);if(!r.ing&&!r.egr)return '';return `Balance hidrico: ingresos ${r.ing} mL, egresos ${r.egr} mL, balance ${r.bal>0?'+':''}${r.bal} mL${r.dk!==null?', diuresis '+r.dk.toFixed(2)+' mL/kg/h'+(r.dk<0.5?' (OLIGURIA)':''):''}`};
+const extraLines=p=>[vsTxt(p),bhTxt(p),p.cud&&p.cud.r&&p.cud.d?`Categorizacion CUDYR: ${p.cud.r}${p.cud.d}`:'',...allergyHits(p).map(a=>`ALERTA ALERGIA: ${a.m} (${a.w})`),rondaTxt(p),procTxt(p),cambios(p).length?'Cambios vs turno anterior: '+cambios(p).join('; '):''].filter(Boolean).map(x=>'- '+x);
+const EV={ingreso:{n:'Ingreso',f:['Procedencia (urgencia, pabellón, domicilio)','Motivo de ingreso','Observaciones']},traslado:{n:'Traslado',f:['Destino','Motivo del traslado','Receptor o acompañante']},alta:{n:'Alta',f:['Tipo de alta (domicilio, otro centro)','Indicaciones entregadas','Observaciones']},caida:{n:'Caída',f:['Lugar y circunstancia','Lesiones observadas','Aviso a médico y conducta']},reaccion:{n:'Reacción adversa',f:['Fármaco o agente sospechoso','Manifestaciones','Conducta realizada']}};
+const evento=p=>{const e=p.ev||{},T=EV[e.t];if(!T)return 'Selecciona un tipo de evento en el formulario (tarjeta Nota por evento).';const h=e.h||hm(Date.now()),sx=p.sexo==='F'?'femenina':p.sexo==='M'?'masculino':'',a=e.a||'-',b=e.b||'-',c=e.c||'-';
+const id=`${h} hrs. Paciente ${sx} de ${p.edad||'-'} anos, iniciales ${p.ini||'-'}, cama ${p.bed||'-'}, dx ${p.dx||'-'}. Alergias: ${p.alergias||'no conocidas'}. Aislamiento: ${p.aisl}.`;
+const dev=p.dev.length?` Dispositivos: ${devLines(p).join('; ')}.`:'',sv=vsTxt(p)?' '+vsTxt(p)+'.':'',esc=scLines(p).length?' '+scLines(p).join('; ')+'.':'';
+const X={ingreso:`NOTA DE INGRESO DE ENFERMERIA\n${id} Ingresa desde ${a} por ${b}. Se identifica con brazalete y se orienta sobre normas de la unidad. Estado general: ${p.estado||'-'}.${dev}${sv}${esc} Se informa a medico de ingreso. ${c}`,
+traslado:`NOTA DE TRASLADO\n${id} Se traslada a ${a} por ${b}. Estado general: ${p.estado||'-'}.${dev}${sv} Se realiza entrega por ISBAR a ${c}. Pendientes: ${p.pend.join('; ')||'sin pendientes criticos'}.`,
+alta:`NOTA DE ALTA DE ENFERMERIA\n${id} Se da de alta a ${a}. Indicaciones y educacion entregadas: ${b}. Se retiran dispositivos segun norma.${sv} ${c}`,
+caida:`NOTA DE EVENTO: CAIDA\n${id} Presenta caida: ${a}. Lesiones: ${b}.${sv}${esc} Se evalua estado neurologico, se avisa a medico y se registra conducta: ${c}. Se notifica evento adverso segun protocolo y se revalora riesgo de caida.`,
+reaccion:`NOTA DE EVENTO: REACCION ADVERSA\n${id} Posible reaccion adversa a ${a}: ${b}.${sv} Conducta: ${c}. Se informa a medico y se notifica a farmacovigilancia.`};return clean(X[e.t])};
+
+function VS({p,up}){const [nd,setNd]=useDraft(p,up,'vs',{pas:'',pad:'',fc:'',fr:'',sat:'',tp:'',av:'A',gl:''});const vs=p.vs||[],lv=lastVS(p),r=lv?news(lv):null;
+const f=(k,l)=><L key={k} t={l}><In type="number" step="any" value={nd[k]} onChange={e=>setNd({...nd,[k]:e.target.value})}/></L>;
+const add=()=>{const o2=!!(p.o2&&p.o2.s&&p.o2.s!=='Ambiental');up({vs:[...vs,{...nd,o2,id:Math.random().toString(36).slice(2),t:hm(Date.now())}].slice(-12)});setNd({...nd,pas:'',pad:'',fc:'',fr:'',sat:'',tp:'',gl:''})};
+const AV={A:'Alerta',C:'Confusión nueva',V:'Voz',P:'Dolor',U:'Sin respuesta'};
+return <Card t="Signos vitales y alerta temprana (NEWS2)">
+<div className="grid grid-cols-3 sm:grid-cols-4 gap-2">{[['pas','PAS'],['pad','PAD'],['fc','FC'],['fr','FR'],['sat','SatO2 %'],['tp','T° C'],['gl','Glicemia']].map(([k,l])=>f(k,l))}</div>
+<L t="Conciencia (AVPU)"><Chips o={Object.keys(AV)} v={nd.av} lab={x=>AV[x]} on={x=>setNd({...nd,av:x||'A'})}/></L>
+<button onClick={add} className="rounded-lg bg-teal-700 text-white text-sm px-3 py-1.5 flex items-center gap-1"><Ic d={P.plus}/>Registrar control</button>
+<p className="text-xs text-slate-500">Se considera O2 suplementario si el aporte de oxígeno elegido no es ambiental. Escala SpO2 1 (no EPOC hipercápnico).</p>
+{r&&<div className="rounded-lg px-3 py-2 text-white text-sm font-medium" style={{background:r.col}}>NEWS2 {r.t}: {r.lvl}<div className="text-xs font-normal">{Object.entries(r.parts).filter(([,x])=>x).map(([k,x])=>k+' '+x).join(', ')||'Sin puntos'}</div></div>}
+<Trend vs={vs}/>
+{vs.slice(-5).reverse().map(v=>{const q=news(v);return <div key={v.id} className="flex items-center gap-2 text-xs border-b border-slate-200 dark:border-slate-800 pb-1"><span className="font-semibold">{v.t}</span><span className="flex-1">PA {v.pas}/{v.pad} FC {v.fc} FR {v.fr} Sat {v.sat}% T {v.tp}{v.gl?' HGT '+v.gl:''}</span><span className="px-1.5 rounded text-white" style={{background:q.col}}>{q.t}</span><button aria-label="Quitar" onClick={()=>up({vs:vs.filter(x=>x.id!==v.id)})}><Ic d={P.trash} c="w-3.5 h-3.5"/></button></div>})}</Card>}
+
+const ING=['Oral','Endovenoso','Enteral','Sangre/hemoderivados'],EGR=['Diuresis','Deposiciones líquidas','Drenaje','Vómitos','Otros'];
+function BH({p,up}){const b=p.bh||{peso:'',hrs:'12',e:[]},e=b.e||[];const [nd,setNd]=useDraft(p,up,'bh',{k:'ing',tp:'Endovenoso',ml:''});const set=x=>up({bh:{...b,e,...x}});const r=bhSum(p);
+return <Card t="Balance hídrico y diuresis">
+<div className="grid grid-cols-2 gap-2"><L t="Peso (kg)"><In type="number" value={b.peso||''} onChange={x=>set({peso:x.target.value})}/></L><L t="Horas del turno"><In type="number" value={b.hrs||''} onChange={x=>set({hrs:x.target.value})}/></L></div>
+<L t="Tipo"><Chips o={['ing','egr']} v={nd.k} lab={x=>x==='ing'?'Ingreso':'Egreso'} on={x=>setNd({k:x||nd.k,tp:(x||nd.k)==='ing'?ING[1]:EGR[0],ml:nd.ml})}/></L>
+<L t="Detalle"><Chips o={nd.k==='ing'?ING:EGR} v={nd.tp} on={x=>setNd({...nd,tp:x||nd.tp})}/></L>
+<div className="flex gap-2"><In type="number" placeholder="mL" value={nd.ml} onChange={x=>setNd({...nd,ml:x.target.value})}/><button onClick={()=>{if(!nd.ml)return;set({e:[...e,{...nd}]});setNd({...nd,ml:''})}} className="rounded-lg bg-teal-700 text-white text-sm px-3 flex items-center gap-1"><Ic d={P.plus}/>Agregar</button></div>
+<div className="flex flex-wrap gap-1.5">{e.map((x,i)=><span key={i} className={'text-xs rounded-full px-2 py-0.5 flex items-center gap-1 '+(x.k==='ing'?'bg-sky-100 dark:bg-sky-900':'bg-amber-100 dark:bg-amber-900')}>{x.tp} {x.ml} mL<button aria-label="Quitar" onClick={()=>set({e:e.filter((_,j)=>j!==i)})}>x</button></span>)}</div>
+<div className="rounded-lg bg-slate-100 dark:bg-slate-800 px-3 py-2 text-sm">Ingresos {r.ing} mL, egresos {r.egr} mL, balance <b>{r.bal>0?'+':''}{r.bal} mL</b>{r.dk!==null&&<div className={r.dk<0.5?'text-red-600 font-semibold':''}>Diuresis {r.dk.toFixed(2).replace('.',',')} mL/kg/h{r.dk<0.5?' - oliguria (menor a 0,5): avisar a médico':''}</div>}</div></Card>}
+
+const PRE=[['Cambio de posición',2],['Control de glicemia',6],['Control de signos vitales',4],['Curación',24],['Toma de exámenes',0],['Control de diuresis',2],['Ronda de seguridad',2]];
+function Tasks({p,up}){const now=useNow(),all=p.tasks||[],ts=[...all].sort((a,b)=>a.due-b.due);const [nd,setNd]=useDraft(p,up,'task',{n:'',ev:0,t:''});
+const add=(n,ev,due)=>up({tasks:[...all,{id:Math.random().toString(36).slice(2),n,ev,due}]});
+const custom=()=>{if(!nd.n.trim())return;let due=nextOdd();if(nd.t){const [h,m]=nd.t.split(':'),d=new Date();d.setHours(+h,+m,0,0);if(d.getTime()<now)d.setDate(d.getDate()+1);due=d.getTime()}add(nd.n,nd.ev,due);setNd({...nd,n:''})};
+const done=t=>{if(!t.ev)return up({tasks:all.filter(x=>x.id!==t.id)});let d=t.due+t.ev*36e5;while(d<=now)d+=t.ev*36e5;up({tasks:all.map(x=>x.id===t.id?{...x,due:d}:x)})};
+return <Card t="Tareas con hora">
+<p className="text-xs text-slate-500">Al agregar un modelo, queda para la próxima hora impar. Al marcar Hecha, se reprograma sola si se repite.</p>
+<div className="flex flex-wrap gap-1.5">{PRE.map(([n,ev])=><button key={n} onClick={()=>add(n,ev,nextOdd())} className="px-2.5 py-1 rounded-full text-sm border border-slate-300 dark:border-slate-600 hover:border-teal-600">+ {n}{ev?' c/'+ev+' h':''}</button>)}</div>
+<div className="grid grid-cols-2 sm:grid-cols-4 gap-2 items-end"><div className="col-span-2"><L t="Otra tarea"><In value={nd.n} onChange={e=>setNd({...nd,n:e.target.value})}/></L></div>
+<L t="Hora (opcional)"><In type="time" value={nd.t} onChange={e=>setNd({...nd,t:e.target.value})}/></L>
+<L t="Repetir"><select value={nd.ev} onChange={e=>setNd({...nd,ev:Number(e.target.value)})} className="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-transparent px-2 py-1.5 text-sm">{[[0,'Una vez'],[2,'c/2 h'],[4,'c/4 h'],[6,'c/6 h'],[8,'c/8 h'],[12,'c/12 h'],[24,'c/24 h']].map(([v,l])=><option key={v} value={v} className="text-black">{l}</option>)}</select></L>
+<button onClick={custom} className="col-span-2 sm:col-span-4 rounded-lg bg-teal-700 text-white text-sm py-1.5">Agregar tarea</button></div>
+{ts.map(t=>{const d=t.due-now,st=d<0?'bg-red-100 dark:bg-red-950 border-red-400':d<18e5?'bg-amber-100 dark:bg-amber-950 border-amber-400':'border-slate-200 dark:border-slate-700';return <div key={t.id} className={'flex items-center gap-2 rounded-lg border px-3 py-2 text-sm '+st}><span className="font-semibold tabular-nums">{hm(t.due)}</span><span className="flex-1">{t.n}{t.ev?' (c/'+t.ev+' h)':''}{d<0&&<b className="text-red-600"> vencida</b>}{d>=0&&d<18e5&&<b className="text-amber-700 dark:text-amber-300"> próxima</b>}</span><button onClick={()=>done(t)} className="rounded bg-teal-700 text-white text-xs px-2 py-1">Hecha</button><button aria-label="Quitar" onClick={()=>up({tasks:all.filter(x=>x.id!==t.id)})}><Ic d={P.trash}/></button></div>})}</Card>}
+
+const CR=[['A','Riesgo máximo'],['B','Riesgo alto'],['C','Riesgo medio'],['D','Riesgo bajo']],CD=[['1','Dependencia total'],['2','Dependencia parcial'],['3','Autosuficiente']];
+function Cudyr({p,up}){const c=p.cud||{};
+return <Card t="Categorización CUDYR (riesgo y dependencia)">
+<L t="Riesgo"><Chips o={CR.map(x=>x[0])} v={c.r||''} lab={x=>x+' - '+CR.find(r=>r[0]===x)[1]} on={x=>up({cud:{...c,r:x}})}/></L>
+<L t="Dependencia"><Chips o={CD.map(x=>x[0])} v={c.d||''} lab={x=>x+' - '+CD.find(r=>r[0]===x)[1]} on={x=>up({cud:{...c,d:x}})}/></L>
+{c.r&&c.d&&<div className="rounded-lg bg-teal-50 dark:bg-teal-950 text-teal-900 dark:text-teal-200 px-3 py-2 text-sm font-medium">Categoría {c.r}{c.d}</div>}
+<p className="text-xs text-slate-500">Versión resumida: registra la categoría final. El detalle por ítems se completa en la planilla CUDYR oficial de tu establecimiento.</p></Card>}
+
+function Evento({p,up,sm}){const e=p.ev||{},T=EV[e.t],K=['a','b','c'];
+return <Card t="Nota por evento"><Chips o={Object.keys(EV)} v={e.t||''} lab={x=>EV[x].n} on={x=>{up({ev:{...e,t:x}});if(x)sm('evt')}}/>
+{T&&<div className="space-y-2"><L t="Hora"><In type="time" value={e.h||''} onChange={x=>up({ev:{...e,h:x.target.value}})}/></L>{T.f.map((l,i)=><L key={l} t={l}><In value={e[K[i]]||''} onChange={x=>up({ev:{...e,[K[i]]:x.target.value}})}/></L>)}<p className="text-xs text-slate-500">La nota aparece en la pestaña Evento de la vista previa.</p></div>}</Card>}
+
+function Board({pts,open,copy,copied,sh,list}){const now=useNow(),[hs,setH]=useState(null);
+const {load,by}=useMemo(()=>{const load=Array(24).fill(0),by={};pts.forEach(p=>{const ms=p.meds||[],r=plan(ms);r.load.forEach((n,h)=>{load[h]+=n});ms.forEach(m=>(r.hr[m.id]||[]).forEach(h=>{(by[h]=by[h]||[]).push((p.bed||'-')+': '+m.n)}))});return{load,by}},[pts]);
+const mx=Math.max(1,...load),peak=ORD.find(h=>load[h]===mx);
+const info=pts.map(p=>{const v=lastVS(p);return{p,r:v?news(v):null,fl:flags(p),dv:p.dev.filter(d=>days(d.f)>=(DEV[d.t]||{lim:99}).lim).length,od:(p.tasks||[]).filter(t=>t.due<now).length,al:allergyHits(p).length}});
+const cnt=f=>info.filter(f).length,cud={};pts.forEach(p=>{const c=p.cud;if(c&&c.r&&c.d)cud[c.r+c.d]=(cud[c.r+c.d]||0)+1});
+const st=[['Pacientes',pts.length],['NEWS2 5 o más',cnt(i=>i.r&&i.r.t>=5)],['Aislamiento',cnt(i=>i.p.aisl!=='Estandar')],['Dispositivos por revisar',cnt(i=>i.dv)],['Tareas vencidas',info.reduce((a,i)=>a+i.od,0)],['Alerta alergia',cnt(i=>i.al)],['Con cambios',cnt(i=>cambios(i.p).length)]];
+const EC={Estable:'bg-green-600','De cuidado':'bg-amber-500',Grave:'bg-orange-600',Critico:'bg-red-600'};
+return <div className="space-y-4">
+<div className="grid grid-cols-2 sm:grid-cols-7 gap-2">{st.map(([l,n])=><div key={l} className="rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-3"><div className="text-2xl font-bold text-teal-800 dark:text-teal-400">{n}</div><div className="text-xs text-slate-500">{l}</div></div>)}</div>
+{Object.keys(cud).length>0&&<p className="text-sm">CUDYR: {Object.keys(cud).sort().map(k=>k+' x'+cud[k]).join(', ')}</p>}
+<button onClick={()=>copy(turnoTxt(pts,sh),'turno')} className="w-full py-3 rounded-xl bg-teal-700 hover:bg-teal-800 text-white font-bold flex items-center justify-center gap-2"><Ic c="w-5 h-5" d={copied==='turno'?P.ok:P.copy}/>{copied==='turno'?'Copiado':'Copiar entrega de todo el turno ('+pts.length+' pacientes)'}</button>
+<div className="grid grid-cols-2 gap-2"><button onClick={()=>exp('pdf',turnoTxt(pts,sh),'entrega-turno')} className="py-2 rounded-lg border border-slate-400 text-sm">Descargar PDF del turno</button><button onClick={()=>exp('docx',turnoTxt(pts,sh),'entrega-turno')} className="py-2 rounded-lg border border-slate-400 text-sm">Descargar Word del turno</button></div>
+<Card t="Carga de fármacos de todo el turno">
+<div className="text-sm">{load.some(x=>x)?'Máximo simultáneo: '+mx+' dosis a las '+hh(peak)+'. Toca una hora para ver el detalle.':'Aún no hay fármacos registrados.'}</div>
+<div className="flex items-end gap-0.5">{ORD.map(h=><button key={h} onClick={()=>setH(hs===h?null:h)} className="flex-1 flex flex-col items-center justify-end"><span className="text-[10px] h-3">{load[h]||''}</span><div style={{height:(load[h]/mx*64)+'px'}} className={'w-full rounded-t '+(hs===h?'bg-slate-800 dark:bg-slate-200':h%2?'bg-teal-600':'bg-amber-500')}/><span className="text-[10px] text-slate-500">{h}</span></button>)}</div>
+{hs!==null&&<div className="text-sm rounded-lg bg-slate-100 dark:bg-slate-800 p-3"><b>{hh(hs)}</b>: {(by[hs]||[]).join('; ')||'sin dosis'}</div>}</Card>
+<div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-2">{list.map(l=>info.find(i=>i.p.id===l.id)).filter(Boolean).map(({p,r,fl,dv,od})=><button key={p.id} onClick={()=>open(p.id)} className="text-left rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-3 space-y-1 hover:border-teal-600">
+<div className="flex items-center gap-2"><b>{p.bed||'Cama'}</b><span className="text-sm">{p.ini} {p.edad}{p.sexo}</span>{p.estado&&<span className={'ml-auto text-[10px] px-1.5 rounded text-white '+(EC[p.estado]||'bg-slate-500')}>{p.estado}</span>}</div>
+<div className="text-xs text-slate-500 line-clamp-2">{p.dx||'Sin diagnóstico'}</div>
+<div className="flex flex-wrap gap-1">{r&&<span className="text-[10px] px-1.5 rounded text-white" style={{background:r.col}}>NEWS2 {r.t}</span>}{fl.filter(f=>!f[0].startsWith('NEWS2')).map(([t,c])=><span key={t} className={'text-[10px] px-1.5 rounded text-white '+c}>{t}</span>)}{dv>0&&<span className="text-[10px] px-1.5 rounded text-white bg-red-500">Disp. {dv}</span>}{p.next&&<span className="text-[10px] px-1.5 rounded bg-yellow-300 text-black">Nota turno</span>}{p.cud&&p.cud.r&&p.cud.d&&<span className="text-[10px] px-1.5 rounded bg-slate-200 dark:bg-slate-700">{p.cud.r}{p.cud.d}</span>}</div></button>)}</div></div>}
+
+const fmt=x=>isFinite(x)?String(Math.round(x*100)/100).replace('.',','):'-';
+function Calc(){const [t,setT]=useState('vol'),[v,setV]=useState({fac:'20'});const n=k=>parseFloat(String(v[k]||'').replace(',','.'));
+const I=(k,l)=><L key={k} t={l}><In inputMode="decimal" value={v[k]||''} onChange={e=>setV({...v,[k]:e.target.value})}/></L>;
+const R=(l,x,u)=><div key={l} className="rounded-lg bg-teal-50 dark:bg-teal-950 text-teal-900 dark:text-teal-200 px-3 py-2 text-sm"><b>{l}:</b> {fmt(x)} {u}</div>;
+const mlh=n('vol')/n('hrs'),conc=n('mg')*1000/n('dil'),pe=n('peso');
+return <Card t="Calculadoras de infusión y dosis">
+<div className="flex flex-wrap gap-1.5">{[['vol','Volumen y goteo'],['mcg','mcg/kg/min'],['mgkg','mg/kg']].map(([k,l])=><button key={k} onClick={()=>setT(k)} className={'px-2.5 py-1 rounded-lg text-sm border '+(t===k?'bg-slate-800 text-white dark:bg-slate-200 dark:text-slate-900':'border-slate-300 dark:border-slate-600')}>{l}</button>)}</div>
+{t==='vol'&&<div className="space-y-2"><div className="grid grid-cols-2 gap-2">{I('vol','Volumen (mL)')}{I('hrs','Tiempo (horas)')}</div><Chips o={['20','60']} v={v.fac} lab={x=>x==='20'?'Macrogoteo 20 gotas/mL':'Microgoteo 60 gotas/mL'} on={x=>setV({...v,fac:x||'20'})}/>{v.vol&&v.hrs&&[R('Velocidad',mlh,'mL/h'),R('Goteo',mlh*n('fac')/60,'gotas/min')]}</div>}
+{t==='mcg'&&<div className="space-y-2"><div className="grid grid-cols-2 gap-2">{I('peso','Peso (kg)')}{I('mg','Fármaco en la bolsa (mg)')}{I('dil','Volumen total (mL)')}{I('dosis','Dosis indicada (mcg/kg/min)')}{I('rate','Velocidad actual (mL/h)')}</div>{v.mg&&v.dil&&R('Concentración',conc,'mcg/mL')}{v.dosis&&v.peso&&v.mg&&v.dil&&R('Velocidad para esa dosis',n('dosis')*pe*60/conc,'mL/h')}{v.rate&&v.peso&&v.mg&&v.dil&&R('Dosis con la velocidad actual',n('rate')*conc/(pe*60),'mcg/kg/min')}</div>}
+{t==='mgkg'&&<div className="space-y-2"><div className="grid grid-cols-2 gap-2">{I('dk','Dosis (mg/kg)')}{I('p2','Peso (kg)')}{I('cmg','Concentración (mg/mL), opcional')}</div>{v.dk&&v.p2&&R('Dosis total',n('dk')*n('p2'),'mg')}{v.dk&&v.p2&&v.cmg&&R('Volumen a administrar',n('dk')*n('p2')/n('cmg'),'mL')}</div>}
+<p className="text-xs text-slate-500">Apoyo de cálculo: verifica siempre con doble chequeo y la indicación médica.</p></Card>}
+
+const H=async x=>{try{const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode('tpe:'+x));return Array.from(new Uint8Array(b)).map(y=>y.toString(16).padStart(2,'0')).join('')}catch(e){return 'p:'+x}};
+const THEMES=[{id:'clinico',name:'Clínico (teal)',sw:'#0f766e'},{id:'sereno',name:'Sereno (azul)',sw:'#2563eb'},{id:'calido',name:'Cálido (ámbar)',sw:'#b45309'},{id:'grafito',name:'Grafito (alto contraste)',sw:'#1e293b'}];
+let ENC_BLOB=null;
+const b64e=u=>{u=new Uint8Array(u);let x='';for(let i=0;i<u.length;i+=8192)x+=String.fromCharCode.apply(null,u.subarray(i,i+8192));return btoa(x)};
+const b64d=t=>Uint8Array.from(atob(t),c=>c.charCodeAt(0));
+const deriveKey=async(pin,salt)=>{const k=await crypto.subtle.importKey('raw',new TextEncoder().encode(pin),'PBKDF2',false,['deriveKey']);return crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations:150000,hash:'SHA-256'},k,{name:'AES-GCM',length:256},false,['encrypt','decrypt'])};
+const encObj=async(o,key,salt)=>{const iv=crypto.getRandomValues(new Uint8Array(12)),ct=await crypto.subtle.encrypt({name:'AES-GCM',iv},key,new TextEncoder().encode(JSON.stringify(o)));return JSON.stringify({enc:1,salt:b64e(salt),iv:b64e(iv),ct:b64e(ct)})};
+const decObj=async(txt,key)=>{const j=JSON.parse(txt),pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:b64d(j.iv)},key,b64d(j.ct));return JSON.parse(new TextDecoder().decode(pt))};
+const useDraft=(p,up,k,init)=>{const v=(p.draft||{})[k]||init;return [v,x=>up({draft:{...(p.draft||{}),[k]:x}})]};
+function Seg({sec,setSec,lockNow,start,onPin,onNoPin,enc,onExport,onImport,acc,setAcc,th,setTh}){const [pin,setPin]=useState('');
+const sl=(v,set,o)=><select value={v} onChange={e=>set(Number(e.target.value))} className="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-transparent px-2 py-1.5 text-sm">{o.map(([a,t])=><option key={a} value={a} className="text-black">{t}</option>)}</select>;
+const save=async()=>{if(pin.length<6)return alert('El PIN debe tener al menos 6 dígitos (se recomiendan 8 o más)');await onPin(pin);setPin('')};
+const ck=(k,l)=><label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={!!acc[k]} onChange={e=>setAcc({...acc,[k]:e.target.checked})}/>{l}</label>;
+return <div className="space-y-4"><Card t="Seguridad del dispositivo">
+<p className="text-sm">PIN: <b>{sec.pin?'activo':'sin configurar'}</b>. Datos cifrados: <b>{enc?'sí':'no'}</b>.</p>
+<p className="text-xs text-slate-500">Al guardar un PIN, los datos del dispositivo se cifran con él. Un PIN corto se puede adivinar por fuerza bruta si alguien copia los datos: usa 8 o más dígitos. Si olvidas el PIN, los datos no se pueden recuperar.</p>
+<div className="flex gap-2"><In type="password" inputMode="numeric" placeholder="Nuevo PIN (6 o más dígitos)" value={pin} onChange={e=>setPin(e.target.value.replace(/\D/g,''))}/><button onClick={save} className="rounded-lg bg-teal-700 text-white text-sm px-3">Guardar</button></div>
+{sec.pin&&<div className="flex gap-3"><button onClick={lockNow} className="text-sm underline">Bloquear ahora</button><button onClick={onNoPin} className="text-sm text-red-600 underline">Quitar PIN</button></div>}
+<div className="grid grid-cols-2 gap-2"><L t="Bloqueo por inactividad">{sl(sec.lock,v=>setSec({...sec,lock:v}),[[0,'Nunca'],[2,'2 min'],[5,'5 min'],[10,'10 min'],[15,'15 min'],[30,'30 min']])}</L><L t="Borrado automático del turno">{sl(sec.purge,v=>setSec({...sec,purge:v}),[[0,'Desactivado'],[8,'8 horas'],[12,'12 horas'],[16,'16 horas'],[24,'24 horas']])}</L></div>
+<p className="text-xs text-slate-500">Turno iniciado: {new Date(start).toLocaleString('es-CL')}. El bloqueo y el borrado funcionan mientras la página está abierta.</p>
+<div className="border-t border-slate-200 dark:border-slate-800 pt-3 space-y-2"><div className="font-medium text-sm">Respaldo</div>
+<div className="flex flex-wrap gap-2"><button onClick={onExport} className="text-sm rounded-lg bg-teal-700 text-white px-3 py-1.5">Exportar respaldo{enc?' (cifrado)':''}</button>
+<label className="text-sm rounded-lg border border-slate-400 px-3 py-1.5 cursor-pointer">Importar respaldo<input type="file" accept=".json" className="hidden" onChange={e=>{const fl=e.target.files[0];e.target.value='';if(fl)onImport(fl)}}/></label></div>
+<p className="text-xs text-slate-500">Con PIN activo el respaldo sale cifrado y se abre con ese mismo PIN. Sin PIN contiene datos de pacientes en texto legible: guárdalo en un lugar seguro y bórralo al terminar el turno.</p></div></Card>
+<Card t="Diseño"><p className="text-xs text-slate-500">Cambia colores, bordes y sombras. No cambia los datos.</p><div className="grid grid-cols-2 gap-2">{THEMES.map(t=><button key={t.id} onClick={()=>setTh(t.id)} className={'flex items-center gap-2 rounded-lg border px-3 py-2 text-sm '+(th===t.id?'border-teal-700 font-semibold':'border-slate-300 dark:border-slate-700')}><span className="w-4 h-4 rounded-full shrink-0" style={{background:t.sw}}/>{t.name}</button>)}</div></Card>
+<Card t="Accesibilidad y uso"><L t="Tamaño de letra">{sl(acc.fs,v=>setAcc({...acc,fs:v}),[[100,'Normal'],[115,'Grande'],[130,'Muy grande'],[150,'Extra grande']])}</L>{ck('hc','Alto contraste')}{ck('one','Modo una mano (barra de botones abajo)')}</Card></div>}
+function Lock({sec,onTry,onForgot}){const [v,setV]=useState(''),[err,setErr]=useState(false),[bz,setBz]=useState(false);const go=async()=>{setBz(true);const ok=await onTry(v);setBz(false);if(!ok){setErr(true);setV('')}};
+return <div className="min-h-screen flex items-center justify-center p-4"><div className="w-full max-w-xs rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 space-y-3"><h1 className="text-lg font-bold text-teal-800 dark:text-teal-400">TurnoPro EU</h1><p className="text-sm">Ingresa tu PIN para continuar.</p>
+<In type="password" inputMode="numeric" autoFocus value={v} onChange={e=>setV(e.target.value.replace(/\D/g,''))} onKeyDown={e=>e.key==='Enter'&&go()}/>
+{err&&<p className="text-sm text-red-600">PIN incorrecto.</p>}
+<button onClick={go} disabled={bz} className="w-full rounded-lg bg-teal-700 text-white py-2 font-semibold">{bz?'Verificando...':'Desbloquear'}</button>
+<button onClick={()=>confirm('Esto borra TODOS los datos y el PIN. Continuar?')&&onForgot()} className="text-xs text-red-600 underline">Olvidé mi PIN (borra todo)</button></div></div>}
+const AB={'Somnoliento':'Somn','Estuporoso':'Estup','Parcialmente orientado':'POr','Orientado':'Or','Desorientado':'Desor','Contención física con indicación médica':'CF indic','Pupilas isocóricas reactivas':'PIR','Eupneico':'Eupn','Taquipneico':'Taquip','Bradipneico':'Bradip','MP conservado':'MP+','MP disminuido':'MP dism','Crepitantes':'Crep','Sibilancias':'Sibil','Roncus':'Ronc','Tórax simétrico':'Tx simet','Normotenso':'NT','Hipertenso':'HTA','Hipotenso':'Hipot','Normocárdico':'NormoC','Taquicárdico':'TaquiC','Bradicárdico':'BradiC','Ritmo sinusal':'RS','Fibrilación auricular':'FA','Otra arritmia':'Arritmia','Uso de DVA':'DVA','Pulsos periféricos presentes':'Pulsos+','Llene capilar < 2 s':'LLC<2s','Blando depresible':'Blando','Distendido':'Distend','Doloroso a la palpación':'Doloroso','RHA presentes':'RHA+','RHA disminuidos':'RHA dism','RHA ausentes':'RHA-','Deposiciones normales':'Dep+','Sin deposiciones':'Sin dep','Diuresis espontánea':'Diur esp','Diuresis por CUP':'Diur CUP','Diuresis conservada':'Diur cons','LPP grado I':'LPP I','LPP grado II':'LPP II','LPP grado III':'LPP III','LPP grado IV':'LPP IV','Herida op. apósito limpio':'HO limpia','Herida op. apósito manchado':'HO manchada','Piel hidratada':'Piel hid'};
+const ab=x=>AB[x]||(x.startsWith('RASS ')?x.replace(' ',''):x);
+const PA={'Examenes de laboratorio pendientes':'Labs','Imagenologia (TAC/Eco/Rx)':'Imagen','Interconsultas':'IC','Ayuno para procedimiento/pabellon':'Ayuno','Transfusiones':'Transf','Tramites alta/epicrisis':'Alta/epic'};
+const O2A={'Ambiental':'amb','Naricera':'NC','Mascarilla Venturi':'Venturi','MAF':'MAF','CNAF':'CNAF','VMNI':'VMNI','VMI':'VMI'};
+const o2S=p=>{const o=p.o2||{},c=O2[o.s]||{},a=[];if(o.s)a.push(O2A[o.s]+(o.l?' '+o.l+'L':'')+(o.f&&o.s!=='Ambiental'?' FiO2 '+o.f+'%':''));(c.x||[]).forEach(k=>o.x&&o.x[k]&&a.push(k+o.x[k]));if(o.sat)a.push('Sat'+o.sat);return a.join(' ')};
+const sysS=(p,k)=>[...sisItems(p,k).map(ab),k==='resp'?o2S(p):'',p.sisT[k]].filter(Boolean).join(' ');
+const SN={neuro:'Neuro',resp:'Resp',cv:'CV',gi:'GI',piel:'Piel'};
+const snap=p=>({t:Date.now(),estado:p.estado,aisl:p.aisl,sis:p.sis,o2:p.o2||{},devs:p.dev.map(d=>d.t+(d.d?' '+d.d:'')),meds:(p.meds||[]).map(m=>m.n),pend:p.pend,news:lastVS(p)?news(lastVS(p)).t:null,sc:scLines(p)});
+const cambios=p=>{const a=p.prev;if(!a)return[];const o=[],df=(l,x,y)=>{const ad=y.filter(i=>!x.includes(i)),rm=x.filter(i=>!y.includes(i));if(ad.length)o.push(l+' nuevo: '+ad.join(', '));if(rm.length)o.push(l+' ya no: '+rm.join(', '))};
+if((p.estado||'')!==(a.estado||''))o.push('Estado: '+(a.estado||'-')+' a '+(p.estado||'-'));if(p.aisl!==a.aisl)o.push('Aislamiento: '+a.aisl+' a '+p.aisl);
+Object.keys(SIS).forEach(k=>df(SIS[k].n,(a.sis||{})[k]||[],p.sis[k]||[]));
+const on=x=>x&&x.s?x.s+(x.l?' '+x.l+' L/min':'')+(x.f?' FiO2 '+x.f+'%':''):'';if(on(a.o2)!==on(p.o2))o.push('O2: '+(on(a.o2)||'-')+' a '+(on(p.o2)||'-'));
+df('Dispositivo',a.devs||[],p.dev.map(d=>d.t+(d.d?' '+d.d:'')));df('Fármaco',a.meds||[],(p.meds||[]).map(m=>m.n));df('Pendiente',a.pend||[],p.pend);df('Escala',a.sc||[],scLines(p));
+const v=lastVS(p);if(v&&a.news!==null&&news(v).t!==a.news)o.push('NEWS2: '+a.news+' a '+news(v).t);return o};
+function Cambios({p}){if(!p.prev)return null;const c=cambios(p);return <Card t="Cambios desde el turno anterior">{c.length?<ul className="text-sm list-disc pl-5 space-y-0.5">{c.map(x=><li key={x}>{x}</li>)}</ul>:<p className="text-sm text-slate-500">Sin cambios registrados.</p>}</Card>}
+const corto=(p,reg)=>{const n=x=>x||'-',dd=new Date().toLocaleDateString('es-CL')+' '+hm(Date.now());
+const dv=p.dev.map(x=>{const d=days(x.f),I=DEV[x.t]||{lim:99};return x.t+(x.d?' '+x.d.split(',')[0]:'')+' d'+(d+1)+(d>=I.lim?'!':'')}).join('; ');
+const ABS={downton:'Dwn',braden:'Brd',maddox:'Mdx',eva:'EVA',glasgow:'Gl',barthel:'Bar',morse:'Mor',cam:'CAM',norton:'Nor',must:'MUST'},sc=Object.keys(SC).map(k=>{const r=res(k,p.sc[k]);if(!r)return '';return k==='cam'?'CAM-ICU '+(r.score?'POS':'neg'):k==='downton'?'Dwn '+r.score+(r.score>=3?' ALTO':''):k==='maddox'?'Mdx G'+r.score:(ABS[k]||k)+' '+r.score+(['braden','norton','morse','barthel','must'].includes(k)?' '+r.r.l.replace(/^riesgo /i,''):'')}).filter(Boolean).join('; ');
+const v=lastVS(p),vs=v?`SV ${v.t} PA${v.pas}/${v.pad} FC${v.fc} FR${v.fr} Sat${v.sat} T${v.tp}${v.gl?' HGT'+v.gl:''} NEWS${news(v).t}`:'';
+const b=bhSum(p),bh=b.ing||b.egr?`BH ${b.bal>0?'+':''}${b.bal}${b.dk!==null?' Diur '+b.dk.toFixed(1)+'mL/kg/h':''}`:'';
+const o=[`${reg?'EVOL '+dd+' | ':''}${n(p.bed)} | ${n(p.ini)} ${n(p.edad)}${p.sexo||''} | D${n(p.dh)} | ${n(p.dx)}`,
+`ALERG: ${p.alergias||'no'} | Aisl: ${p.aisl}${reg?'':' | Eq: '+n(p.medico)}`,
+`Est: ${n(p.estado)}${reg?'':' | Reg: '+n(p.reg)+' | Mov: '+n(p.mov)}`,
+dv&&'Disp: '+dv,...Object.keys(SIS).map(k=>{const t=sysS(p,k);return t?SN[k]+': '+t:''}),
+sc&&'Esc: '+sc,vs,bh,p.cud&&p.cud.r&&p.cud.d?'CUDYR '+p.cud.r+p.cud.d:'',
+(p.meds||[]).length?'Farm: '+p.meds.length+' (ver horario)':'',p.pend.length?'Pend: '+p.pend.map(x=>PA[x]||x).join(', '):'',
+rondaS(p),procS(p),cambios(p).length?'CAMB: '+cambios(p).join('; '):'',allergyHits(p).length?'ALERTA ALERGIA: '+allergyHits(p).map(a=>a.m).join(', '):'',
+p.obs&&'Obs: '+p.obs,p.next&&'PROX TURNO: '+p.next,reg?'Plan: seguir indicaciones':''];return clean(o.filter(Boolean).join('\n'))};
+const farmS=p=>{const ms=p.meds||[],{hr}=plan(ms),o=['FARM '+(p.bed||'-')+' '+(p.ini||'')];ORD.forEach(h=>{const t=ms.filter(m=>(hr[m.id]||[]).includes(h)).map(m=>m.n);if(t.length)o.push(String(h).padStart(2,'0')+': '+t.join(', '))});const so=ms.filter(m=>!m.fr).map(m=>m.n);if(so.length)o.push('SOS: '+so.join(', '));return clean(o.join('\n'))};
+const turnoTxt=(pts,sh)=>sh?clean(['ENTREGA DE TURNO - '+pts.length+' PACIENTES',...pts.map(p=>'------\n'+corto(p,0))].join('\n')):clean(['ENTREGA DE TURNO - '+pts.length+' PACIENTES',...pts.map(p=>'==================\n'+isbar(p))].join('\n'));
+const esc=x=>x.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const mkPdf=t=>{const d=new window.jspdf.jsPDF({unit:'mm',format:'a4'});d.setFont('courier','normal');d.setFontSize(10);let y=15;t.split('\n').forEach(l=>{d.splitTextToSize(l||' ',180).forEach(q=>{if(y>282){d.addPage();y=15}d.text(q,15,y);y+=4.8})});return d.output('arraybuffer')};
+const mkDocx=t=>{const z=new JSZip(),H='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>';
+z.file('[Content_Types].xml',H+'<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/></Types>');
+z.file('_rels/.rels',H+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>');
+z.file('word/document.xml',H+'<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>'+t.split('\n').map(l=>'<w:p><w:r><w:rPr><w:rFonts w:ascii="Courier New" w:hAnsi="Courier New"/><w:sz w:val="22"/></w:rPr><w:t xml:space="preserve">'+esc(l)+'</w:t></w:r></w:p>').join('')+'<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1134" w:right="1134" w:bottom="1134" w:left="1134" w:header="708" w:footer="708" w:gutter="0"/></w:sectPr></w:body></w:document>');
+return z.generateAsync({type:'arraybuffer'})};
+const toB64=async d=>{if(typeof d==='string')return btoa(unescape(encodeURIComponent(d)));const u=d instanceof Blob?new Uint8Array(await d.arrayBuffer()):new Uint8Array(d.buffer?d.buffer:d);let b='';for(let i=0;i<u.length;i+=8192)b+=String.fromCharCode.apply(null,u.subarray(i,i+8192));return btoa(b)};
+const dlFile=async(name,data)=>{try{const cl=window.claude&&await window.claude.use('downloads');if(cl){await cl.save({filename:name,data});return}
+const cap=window.Capacitor;if(cap&&cap.isNativePlatform&&cap.isNativePlatform()){const Fs=cap.registerPlugin('Filesystem'),Sh=cap.registerPlugin('Share');const r=await Fs.writeFile({path:name,data:await toB64(data),directory:'CACHE'});await Sh.share({title:name,url:r.uri});return}
+const b=data instanceof Blob?data:new Blob([data]),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),3000)}catch(e){if(!e||(e.code!=='declined'&&!/cancel/i.test(e.message||'')))alert('No se pudo generar el archivo')}};
+const exp=async(kind,t,base)=>{const ymd=new Date().toISOString().slice(0,10);try{if(kind==='pdf')await dlFile(base+'-'+ymd+'.pdf',mkPdf(t));else await dlFile(base+'-'+ymd+'.docx',await mkDocx(t))}catch(e){alert('No se pudo generar el archivo')}};
+const beep=c=>{try{const o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=880;g.gain.value=.15;o.start();o.stop(c.currentTime+.4)}catch(e){}};
+const RBASE=['Pulsera de identificación correcta','Barandas arriba','Cama baja y frenada','Timbre al alcance','Objetos personales al alcance','Piso seco y sin obstáculos','Alarmas activas (monitor, bomba)','Vías y conexiones fijas y permeables','Sondas y drenajes sin tirantez'];
+const rItems=p=>{const o=[...RBASE],d=res('downton',p.sc.downton),b=res('braden',p.sc.braden),hs=t=>p.dev.some(x=>x.t===t);
+if(p.alergias)o.push('Alergia identificada (pulsera o cartel)');if(p.aisl!=='Estandar')o.push('Aislamiento señalizado y EPP disponible');if(d&&d.score>=3)o.push('Medidas anticaída aplicadas');if(b&&b.score<=12)o.push('Cambios de posición y alivio de presión al día');if(p.o2&&p.o2.s&&p.o2.s!=='Ambiental')o.push('Equipo de oxígeno operativo');if(hs('CUP (Foley)'))o.push('CUP: bolsa bajo nivel y sin tirantez');if(hs('CVC'))o.push('CVC: apósito íntegro y fecha visible');return o};
+const rondaTxt=p=>{const r=(p.rondas||[]).slice(-1)[0];return r?`Ronda de seguridad ${hm(r.t)}: ${r.ok}/${r.tot} cumplidos${r.falta.length?'; falta: '+r.falta.join(', '):''}`:''};
+const rondaS=p=>{const r=(p.rondas||[]).slice(-1)[0];return r?`Ronda ${hm(r.t)} ${r.ok}/${r.tot}${r.falta.length?' falta: '+r.falta.join(', '):''}`:''};
+function Ronda({p,up}){const it=rItems(p),ck=(p.ronda||[]).filter(x=>it.includes(x)),rs=p.rondas||[];
+const reg=()=>up({rondas:[...rs,{t:Date.now(),ok:ck.length,tot:it.length,falta:it.filter(x=>!ck.includes(x))}].slice(-12),ronda:[]});
+return <Card t="Ronda de seguridad">
+<p className="text-xs text-slate-500">Marca lo que verificas en la ronda. Lo que no marques queda como faltante en el registro. La lista se adapta al paciente (alergia, aislamiento, riesgo de caída, LPP, oxígeno, CUP, CVC).</p>
+<Chips multi o={it} v={ck} on={x=>up({ronda:x})}/>
+<div className="flex flex-wrap items-center gap-2"><button onClick={()=>up({ronda:it})} className="text-sm rounded-lg border border-slate-400 px-3 py-1.5">Marcar todo cumplido</button><button onClick={reg} className="text-sm rounded-lg bg-teal-700 text-white px-3 py-1.5">Registrar ronda ({ck.length}/{it.length})</button></div>
+{rs.slice(-4).reverse().map(r=><div key={r.t} className={'text-xs rounded px-2 py-1 '+(r.falta.length?'bg-amber-100 dark:bg-amber-950':'bg-green-100 dark:bg-green-950')}><b>{hm(r.t)}</b> {r.ok}/{r.tot}{r.falta.length?' - falta: '+r.falta.join(', '):' - completa'}</div>)}</Card>}
+const NT={async plan(pts){const cap=window.Capacitor;if(!cap||!cap.isNativePlatform||!cap.isNativePlatform())return;try{const LN=cap.registerPlugin('LocalNotifications'),pd=await LN.getPending();if(pd.notifications&&pd.notifications.length)await LN.cancel({notifications:pd.notifications});const now=Date.now(),list=[];let id=1;pts.forEach(p=>(p.tasks||[]).forEach(t=>{const reps=t.ev?4:1;for(let i=0;i<reps;i++){const at=t.due+i*(t.ev||0)*36e5;if(at>now&&list.length<60)list.push({id:id++,title:'TurnoPro: tarea pendiente',body:'Cama '+(p.bed||'-')+': '+t.n,schedule:{at:new Date(at),allowWhileIdle:true}})}}));if(list.length)await LN.schedule({notifications:list})}catch(e){}},
+async ask(){const cap=window.Capacitor;if(!cap||!cap.isNativePlatform||!cap.isNativePlatform())return;try{await cap.registerPlugin('LocalNotifications').requestPermissions()}catch(e){}}};
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+function Mic({onText}){const [on,setOn]=useState(false),r=useRef(null);if(!SR)return null;
+const go=()=>{if(on){r.current&&r.current.stop();return}if(!sessionStorage.getItem('dictOK')){if(!confirm('El dictado puede enviar el audio a un servicio externo del navegador. No digas nombres ni RUT. Continuar?'))return;sessionStorage.setItem('dictOK','1')}
+const q=new SR();q.lang='es-CL';q.interimResults=false;q.onresult=e=>onText(Array.from(e.results).map(x=>x[0].transcript).join(' '));q.onend=()=>setOn(false);q.onerror=()=>setOn(false);r.current=q;setOn(true);q.start()};
+return <button type="button" onClick={go} className={'mt-1 text-xs rounded-full border px-2.5 py-1 '+(on?'bg-red-600 text-white border-red-600':'border-slate-400')}>{on?'Detener dictado':'Dictar por voz'}</button>}
+const TS={PAS:v=>Number(v.pas),FC:v=>Number(v.fc),FR:v=>Number(v.fr),SatO2:v=>Number(v.sat),'T°':v=>Number(v.tp),NEWS2:v=>news(v).t};
+function Trend({vs}){const [k,setK]=useState('FC');if(vs.length<2)return <p className="text-xs text-slate-500">Registra al menos 2 controles para ver la tendencia.</p>;
+const d=vs.map(v=>TS[k](v)),ok=d.filter(x=>!isNaN(x)),w=300,h=90,pd=16,mn=Math.min(...ok),mx=Math.max(...ok),rg=mx-mn||1;
+const q=d.map((x,i)=>isNaN(x)?null:[pd+i*(w-2*pd)/(d.length-1),h-pd-(x-mn)/rg*(h-2*pd)]);
+const path=q.filter(Boolean).map((a,i)=>(i?'L':'M')+a[0].toFixed(1)+' '+a[1].toFixed(1)).join(' ');
+return <div className="space-y-1"><div className="text-sm font-medium">Tendencia del turno</div><Chips o={Object.keys(TS)} v={k} on={x=>setK(x||k)}/>
+<svg viewBox={'0 0 '+w+' '+h} className="w-full h-24 text-slate-700 dark:text-slate-200"><path d={path} fill="none" stroke="#0f766e" strokeWidth="2"/>{q.map((a,i)=>a&&<g key={i}><circle cx={a[0]} cy={a[1]} r="3" fill="#0f766e"/><text x={a[0]} y={a[1]-6} fontSize="9" textAnchor="middle" fill="currentColor">{d[i]}</text></g>)}</svg>
+<div className="flex justify-between text-[10px] text-slate-500"><span>{vs[0].t}</span><span>{vs[vs.length-1].t}</span></div></div>}
+const PROC={cup:{n:'Instalación de CUP',s:['Verificar indicación médica y necesidad','Higiene de manos y técnica aséptica','Material estéril completo y calibre adecuado','Higiene genital previa','Instalación con técnica estéril','Inflar balón con agua estéril según fabricante','Fijar sonda y conectar a sistema cerrado','Bolsa bajo el nivel de la vejiga y sin tocar el piso','Registrar fecha, hora, calibre y características de la orina']},
+vvp:{n:'Instalación de VVP',s:['Verificar indicación y explicar el procedimiento','Higiene de manos y guantes limpios','Elegir sitio (evitar zonas de flexión)','Antisepsia con clorhexidina alcohólica y dejar secar','Instalar sin tocar el sitio tras la antisepsia','Verificar permeabilidad y ausencia de infiltración','Fijar con apósito transparente estéril','Rotular fecha, hora y calibre','Registrar sitio y fecha']},
+cur:{n:'Curación de herida o LPP',s:['Higiene de manos','Preparar campo y material estéril','Retirar apósito previo sin contaminar','Evaluar tamaño, exudado y signos de infección','Limpiar con suero fisiológico según protocolo','Aplicar apósito indicado','Fechar el apósito','Eliminar residuos según norma','Registrar características y fecha de la próxima curación']},
+sng:{n:'Instalación de SNG',s:['Verificar indicación médica','Medir longitud (nariz, lóbulo, apéndice xifoides)','Higiene de manos y guantes','Instalar con el paciente semisentado','Confirmar posición según protocolo','Fijar y marcar la longitud','Cabecera elevada 30-45 grados','Registrar fecha, calibre y posición']}};
+const procTxt=p=>{const r=(p.procs||[]).slice(-1)[0];return r?`Procedimiento ${r.n} ${hm(r.t)}: ${r.ok}/${r.tot} pasos${r.falta.length?'; falta: '+r.falta.join(', '):''}`:''};
+const procS=p=>{const r=(p.procs||[]).slice(-1)[0];return r?`Proc ${r.n} ${hm(r.t)} ${r.ok}/${r.tot}`:''};
+function Proc({p,up}){const pr=p.pr||{t:'',ok:[]},T=PROC[pr.t],ps=p.procs||[];
+const reg=()=>up({procs:[...ps,{t:Date.now(),n:T.n,ok:pr.ok.length,tot:T.s.length,falta:T.s.filter(x=>!pr.ok.includes(x))}].slice(-12),pr:{t:'',ok:[]}});
+return <Card t="Procedimientos (lista de verificación)"><Chips o={Object.keys(PROC)} v={pr.t} lab={x=>PROC[x].n} on={x=>up({pr:{t:x,ok:[]}})}/>
+{T&&<div className="space-y-2"><Chips multi o={T.s} v={pr.ok} on={x=>up({pr:{...pr,ok:x}})}/><div className="flex flex-wrap gap-2"><button onClick={()=>up({pr:{...pr,ok:T.s}})} className="text-sm rounded-lg border border-slate-400 px-3 py-1.5">Marcar todos</button><button onClick={reg} className="text-sm rounded-lg bg-teal-700 text-white px-3 py-1.5">Registrar ({pr.ok.length}/{T.s.length})</button></div></div>}
+{ps.slice(-3).reverse().map(r=><div key={r.t} className={'text-xs rounded px-2 py-1 '+(r.falta.length?'bg-amber-100 dark:bg-amber-950':'bg-green-100 dark:bg-green-950')}><b>{hm(r.t)}</b> {r.n}: {r.ok}/{r.tot}{r.falta.length?' - falta: '+r.falta.join(', '):' - completo'}</div>)}
+<p className="text-xs text-slate-500">Pasos de referencia: ajústalos al protocolo IAAS de tu establecimiento.</p></Card>}
+function Prox({p,up}){return <Card t="Nota para el próximo turno"><textarea rows={2} value={p.next||''} placeholder="Ej: avisar a médico por resultado de Hb; control de glicemia a las 21:00" onChange={e=>up({next:e.target.value})} className="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-transparent px-2.5 py-1.5 text-sm"/><Mic onText={t=>up({next:(p.next?p.next+' ':'')+t})}/><p className="text-xs text-slate-500">Aparece destacada al final de la entrega de turno.</p></Card>}
+const ordPts=(pts,q,ord)=>{const t=norm(q),now=Date.now();let a=pts.filter(p=>!t||norm((p.bed||'')+' '+(p.ini||'')+' '+(p.dx||'')).includes(t));
+const k={news:p=>-(lastVS(p)?news(lastVS(p)).t:-1),tareas:p=>-(p.tasks||[]).filter(x=>x.due<now).length,alertas:p=>-flags(p).length};
+if(ord==='cama')a=[...a].sort((x,y)=>String(x.bed).localeCompare(String(y.bed),'es',{numeric:true}));else if(k[ord])a=[...a].sort((x,y)=>k[ord](x)-k[ord](y));return a};
+function App(){
+const [pts,setPts]=useState(load);
+const [th,setTh]=useState(()=>{try{return localStorage.getItem(KEY+'_th')||'clinico'}catch(e){return 'clinico'}});useEffect(()=>{document.documentElement.dataset.t=th;try{localStorage.setItem(KEY+'_th',th)}catch(e){}},[th]);
+const ready=useRef(!ENC_BLOB),keyRef=useRef(null),saltRef=useRef(null),wr=useRef(Promise.resolve());
+const [encOn,setEncOn]=useState(false),[sh,setSh]=useState(false);
+const [snd,setSnd]=useState(()=>{try{return localStorage.getItem(KEY+'_snd')==='1'}catch(e){return false}});
+const ac=useRef(null),ptsR=useRef(null),seen=useRef(new Set()),sndR=useRef(false);
+const [sel,setSel]=useState(pts[0].id),[tab,setTab]=useState('form'),[mode,setMode]=useState('isbar'),[copied,setCopied]=useState(''),[view,setView]=useState('pac'),[q,setQ]=useState(''),[ord,setOrd]=useState('');
+const [acc,setAcc]=useState(()=>{try{return{fs:100,hc:false,one:false,...JSON.parse(localStorage.getItem(KEY+'_acc'))}}catch(e){return{fs:100,hc:false,one:false}}});
+const [dark,setDark]=useState(()=>{try{return localStorage.getItem(KEY+'_t')==='d'}catch(e){return false}});
+const [sec,setSec]=useState(()=>{try{return{pin:'',lock:10,purge:0,...JSON.parse(localStorage.getItem(SK))}}catch(e){return{pin:'',lock:10,purge:0}}});
+const [locked,setLocked]=useState(!!sec.pin||!!ENC_BLOB),last=useRef(Date.now());
+const [start,setStart]=useState(()=>{try{let x=Number(localStorage.getItem(ST));if(!x){x=Date.now()}return x}catch(e){return Date.now()}});
+useEffect(()=>{if(!ready.current)return;const data=pts,key=keyRef.current,salt=saltRef.current;wr.current=wr.current.then(async()=>{try{localStorage.setItem(KEY,key?await encObj(data,key,salt):JSON.stringify(data))}catch(e){}})},[pts,encOn]);
+useEffect(()=>{try{localStorage.setItem(ST,String(start))}catch(e){}},[start]);
+useEffect(()=>{try{localStorage.setItem(SK,JSON.stringify(sec))}catch(e){}},[sec]);
+useEffect(()=>{document.documentElement.style.fontSize=acc.fs+'%';document.documentElement.classList.toggle('hc',!!acc.hc);try{localStorage.setItem(KEY+'_acc',JSON.stringify(acc))}catch(e){}},[acc]);
+useEffect(()=>{document.documentElement.classList.toggle('dark',dark);try{localStorage.setItem(KEY+'_t',dark?'d':'l')}catch(e){}},[dark]);
+useEffect(()=>{const f=()=>{last.current=Date.now()};['click','keydown','touchstart','scroll'].forEach(e=>window.addEventListener(e,f,true));return()=>['click','keydown','touchstart','scroll'].forEach(e=>window.removeEventListener(e,f,true))},[]);
+const purge=all=>{try{localStorage.removeItem(KEY);localStorage.removeItem(OLD);if(all)localStorage.removeItem(SK)}catch(e){};const n=[newP({bed:'1'})];ready.current=true;if(all){ENC_BLOB=null;keyRef.current=null;setEncOn(false);setSec({pin:'',lock:10,purge:0});setLocked(false)}setPts(n);setSel(n[0].id);setView('pac');setStart(Date.now())};
+useEffect(()=>{const i=setInterval(()=>{if(sec.pin&&sec.lock&&!locked&&Date.now()-last.current>sec.lock*6e4)setLocked(true);if(sec.purge&&Date.now()-start>sec.purge*36e5)purge(false)},15000);return()=>clearInterval(i)},[sec,locked,start]);
+const unlock=async pin=>{if(sec.pin&&await H(pin)!==sec.pin)return false;if(ENC_BLOB&&!keyRef.current){try{const j=JSON.parse(ENC_BLOB),salt=b64d(j.salt),k=await deriveKey(pin,salt),data=(await decObj(ENC_BLOB,k)).map(fix);keyRef.current=k;saltRef.current=salt;ready.current=true;ENC_BLOB=null;setPts(data);setSel(data[0].id);setEncOn(true)}catch(e){return false}}last.current=Date.now();setLocked(false);return true};
+const onPin=async pin=>{const h=await H(pin);setSec(x=>({...x,pin:h}));if(window.crypto&&crypto.subtle){const salt=crypto.getRandomValues(new Uint8Array(16));keyRef.current=await deriveKey(pin,salt);saltRef.current=salt;setEncOn(true)}};
+const onNoPin=()=>{if(!confirm('Quitar el PIN deja los datos sin cifrar en este dispositivo. Continuar?'))return;setSec(x=>({...x,pin:''}));keyRef.current=null;setEncOn(false)};
+const onExport=async()=>{const nm='turnopro-respaldo-'+new Date().toISOString().slice(0,10)+'.json';dlFile(nm,keyRef.current?await encObj({v:2,pts},keyRef.current,saltRef.current):JSON.stringify({v:2,pts}))};
+const onImport=fl=>{const r=new FileReader();r.onload=async()=>{try{let j=JSON.parse(r.result);if(j.enc){const pin=prompt('PIN con el que se creó el respaldo');if(!pin)return;j=await decObj(r.result,await deriveKey(pin,b64d(j.salt)))}const a=(j.pts||[]).slice(0,40).map(fix);if(!a.length)throw 0;if(confirm('Se reemplazarán los pacientes actuales por los del respaldo ('+a.length+'). Continuar?'))setPts(a)}catch(x){alert('Archivo de respaldo no válido o PIN incorrecto')}};r.readAsText(fl)};
+ptsR.current=pts;sndR.current=snd;
+const AC=()=>{try{if(!ac.current){ac.current=new (window.AudioContext||window.webkitAudioContext)()}ac.current.resume()}catch(e){}};
+const toggleSnd=()=>{const v=!snd;setSnd(v);try{localStorage.setItem(KEY+'_snd',v?'1':'0')}catch(e){};if(v){AC();if(ac.current)beep(ac.current);try{window.Notification&&Notification.permission==='default'&&Notification.requestPermission()}catch(e){}NT.ask()}};
+useEffect(()=>{const f=()=>{if(sndR.current&&!ac.current)AC()};window.addEventListener('click',f,true);return()=>window.removeEventListener('click',f,true)},[]);
+useEffect(()=>{const i=setInterval(()=>{const now=Date.now();let n=0;ptsR.current.forEach(pp=>(pp.tasks||[]).forEach(t=>{if(t.due<now){n++;const k=t.id+':'+t.due;if(sndR.current&&!seen.current.has(k)){seen.current.add(k);if(ac.current)beep(ac.current);try{navigator.vibrate&&navigator.vibrate(200)}catch(e){}try{window.Notification&&Notification.permission==='granted'&&new Notification('TurnoPro: tarea vencida',{body:'Cama '+(pp.bed||'-')+': '+t.n})}catch(e){}}}}));document.title=(n?'('+n+') ':'')+'TurnoPro EU'},20000);return()=>clearInterval(i)},[]);
+const tsig=JSON.stringify(pts.map(x=>[x.bed,x.tasks]));
+useEffect(()=>{if(snd&&ready.current)NT.plan(pts)},[snd,tsig]);
+const p=pts.find(x=>x.id===sel)||pts[0];
+const up=patch=>setPts(ps=>ps.map(x=>x.id===p.id?{...x,...patch}:x));
+const txt=useMemo(()=>sh?(mode==='isbar'?corto(p,0):mode==='evol'?corto(p,1):mode==='farm'?farmS(p):evento(p)):(mode==='isbar'?isbar(p):mode==='evol'?evol(p):mode==='farm'?farm(p):evento(p)),[p,mode,sh]);
+const full=sh&&(mode==='isbar'||mode==='evol')?(mode==='isbar'?isbar(p):evol(p)):'';
+const nuevoTurno=()=>{if(!confirm('Nuevo turno: se guarda el estado actual para comparar, y se limpian signos vitales, balance, evaluación por sistemas, estado y notas de evento. Continuar?'))return;setPts(ps=>ps.map(x=>({...x,prev:snap(x),vs:[],bh:{...(x.bh||{}),e:[]},sis:{neuro:[],resp:[],cv:[],gi:[],piel:[]},sisT:{},o2:{},estado:'',ev:{},draft:{}})));setStart(Date.now())};
+const dup=()=>{if(pts.length>=40)return;const n={...JSON.parse(JSON.stringify(p)),id:Math.random().toString(36).slice(2),bed:'Copia',ini:'',edad:'',sexo:'',dh:'',alergias:'',vs:[],next:'',draft:{},prev:undefined};setPts([...pts,n]);setSel(n.id)};
+const add=()=>{if(pts.length>=40)return;const n=newP({bed:'Nueva'});setPts([...pts,n]);setSel(n.id)};
+const del=()=>{if(pts.length<2||!confirm('Quitar esta cama?'))return;const r=pts.filter(x=>x.id!==p.id);setPts(r);setSel(r[0].id)};
+const copy=async(t,k)=>{try{await navigator.clipboard.writeText(t)}catch(e){const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();document.execCommand('copy');a.remove()}setCopied(k);setTimeout(()=>setCopied(''),1800)};
+const open=id=>{setSel(id);setView('pac');setTab('form')};
+if(locked)return <Lock sec={sec} onTry={unlock} onForgot={()=>purge(true)}/>;
+const list=ordPts(pts,q,ord);
+const MODES=[['isbar','Entrega ISBAR'],['evol','Nota evolución'],['farm','Horario fármacos'],['evt','Evento']];
+const Bar=<div className="flex gap-2"><In placeholder="Buscar cama, iniciales o diagnóstico" value={q} onChange={e=>setQ(e.target.value)}/><select value={ord} onChange={e=>setOrd(e.target.value)} className="rounded-lg border border-slate-300 dark:border-slate-700 bg-transparent px-2 text-sm">{[['','Orden original'],['cama','Por cama'],['news','Mayor NEWS2'],['tareas','Más tareas vencidas'],['alertas','Más alertas']].map(([v,t])=><option key={v} value={v} className="text-black">{t}</option>)}</select></div>;
+return <div className="max-w-7xl mx-auto p-3 sm:p-4 space-y-3" style={{paddingBottom:acc.one?'6rem':undefined}}>
+<header className="flex items-center gap-2 flex-wrap">
+<h1 className="text-xl font-bold text-teal-800 dark:text-teal-400 mr-auto">TurnoPro EU <span className="font-normal text-slate-500 text-sm">Registros y entrega de turno</span></h1>
+{[['pac','Pacientes'],['board','Tablero'],['tools','Herramientas']].map(([k,l])=><button key={k} onClick={()=>setView(k)} className={'px-3 py-2 rounded-lg text-sm border '+(view===k?'bg-teal-700 border-teal-700 text-white':'border-slate-300 dark:border-slate-700')}>{l}</button>)}
+<button onClick={nuevoTurno} className="px-3 py-2 rounded-lg text-sm border border-slate-300 dark:border-slate-700">Nuevo turno</button>
+<button onClick={toggleSnd} className="px-3 py-2 rounded-lg text-sm border border-slate-300 dark:border-slate-700">Avisos: {snd?'sí':'no'}</button>
+{sec.pin&&<button onClick={()=>setLocked(true)} className="px-3 py-2 rounded-lg text-sm border border-slate-300 dark:border-slate-700">Bloquear</button>}
+<button onClick={()=>setDark(!dark)} aria-label="Cambiar tema" className="p-2 rounded-lg border border-slate-300 dark:border-slate-700"><Ic d={dark?P.sun:P.moon}/></button>
+<button onClick={()=>confirm('Se borraran TODOS los datos de este dispositivo. Continuar?')&&purge(false)} className="px-3 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white text-sm font-semibold">Cerrar Turno y Borrar Todo</button></header>
+{view!=='tools'&&Bar}
+{view==='board'&&<Board pts={pts} list={list} open={open} copy={copy} copied={copied} sh={sh}/>}
+{view==='tools'&&<div className="grid lg:grid-cols-2 gap-4 items-start"><Calc/><Seg sec={sec} setSec={setSec} lockNow={()=>setLocked(true)} start={start} onPin={onPin} onNoPin={onNoPin} enc={encOn} onExport={onExport} onImport={onImport} acc={acc} setAcc={setAcc} th={th} setTh={setTh}/></div>}
+{view==='pac'&&<>
+<nav className="flex gap-2 flex-wrap max-h-48 overflow-y-auto pb-1">{list.map(x=><button key={x.id} onClick={()=>setSel(x.id)} className={'shrink-0 text-left rounded-xl border px-3 py-2 min-w-[8.5rem] '+(x.id===p.id?'bg-teal-700 border-teal-700 text-white':'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800')}>
+<div className="font-semibold text-sm">{x.bed||'Cama'} <span className="font-normal opacity-80">{x.ini}</span></div>
+<div className="flex flex-wrap gap-1 mt-1">{flags(x).map(([t,c])=><span key={t} className={'text-[10px] leading-4 px-1.5 rounded text-white '+c}>{t}</span>)}</div></button>)}
+{list.length===0&&<span className="text-sm text-slate-500 px-2">Sin resultados.</span>}
+{pts.length<40&&<button onClick={add} className="shrink-0 rounded-xl border border-dashed border-slate-400 px-3 py-2 flex items-center gap-1 text-sm"><Ic d={P.plus}/>Cama ({pts.length}/40)</button>}</nav>
+<div className="lg:hidden grid grid-cols-2 rounded-lg overflow-hidden border border-slate-300 dark:border-slate-700 text-sm">{[['form','Formulario'],['prev','Vista previa']].map(([k,l])=><button key={k} onClick={()=>setTab(k)} className={'py-2 '+(tab===k?'bg-slate-800 text-white dark:bg-slate-200 dark:text-slate-900':'')}>{l}</button>)}</div>
+<div className="grid lg:grid-cols-2 gap-4 items-start">
+<div className={tab==='form'?'':'hidden lg:block'}><Form p={p} up={up} sm={m=>{setMode(m)}}/><div className="mt-3 flex flex-wrap gap-4"><button onClick={dup} className="text-sm underline">Duplicar como plantilla (sin identidad ni alergias)</button><button onClick={del} className="text-sm text-red-600 flex items-center gap-1"><Ic d={P.trash}/>Quitar esta cama</button></div></div>
+<div className={'lg:sticky lg:top-3 space-y-2 '+(tab==='prev'?'':'hidden lg:block')}>
+<div className="grid grid-cols-4 rounded-lg overflow-hidden border border-slate-300 dark:border-slate-700 text-xs sm:text-sm">{MODES.map(([k,l])=><button key={k} onClick={()=>setMode(k)} className={'py-2 '+(mode===k?'bg-teal-700 text-white':'bg-white dark:bg-slate-900')}>{l}</button>)}</div>
+<label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={sh} onChange={e=>setSh(e.target.checked)}/>Versión corta para copiar a mano <span className="text-xs text-slate-500 ml-auto">{txt.split('\n').length} líneas, {txt.length} caracteres{full?' ('+Math.round(100-txt.length/full.length*100)+'% menos)':''}</span></label>
+<div className="rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 max-h-[60vh] overflow-auto text-sm"><pre>{txt}</pre></div>
+<button onClick={()=>copy(txt,'prev')} className="w-full py-4 rounded-xl bg-teal-700 hover:bg-teal-800 text-white text-lg font-bold flex items-center justify-center gap-2"><Ic c="w-6 h-6" d={copied==='prev'?P.ok:P.copy}/>{copied==='prev'?'Copiado':'Copiar para Ficha Clinica'}</button>
+<div className="grid grid-cols-2 gap-2"><button onClick={()=>exp('pdf',txt,'registro-'+(p.bed||'cama'))} className="py-2 rounded-lg border border-slate-400 text-sm">Descargar PDF</button><button onClick={()=>exp('docx',txt,'registro-'+(p.bed||'cama'))} className="py-2 rounded-lg border border-slate-400 text-sm">Descargar Word</button></div>
+<p className="text-xs text-slate-500">Texto plano sin emojis ni símbolos especiales. Sin RUT ni nombre; los datos viven solo en este dispositivo.</p></div></div></>}
+{acc.one&&<div className="fixed bottom-0 inset-x-0 z-20 grid grid-cols-4 gap-1 p-2 bg-white dark:bg-slate-900 border-t border-slate-300 dark:border-slate-700" style={{paddingBottom:'calc(0.5rem + env(safe-area-inset-bottom,0px))'}}>{[['pac','Pacientes'],['board','Tablero'],['tools','Más']].map(([k,l])=><button key={k} onClick={()=>setView(k)} className={'py-3 rounded-lg text-sm font-semibold '+(view===k?'bg-teal-700 text-white':'border border-slate-400')}>{l}</button>)}<button onClick={()=>copy(view==='board'?turnoTxt(pts,sh):txt,'bar')} className="py-3 rounded-lg bg-teal-700 text-white text-sm font-semibold">{copied==='bar'?'Copiado':'Copiar'}</button></div>}</div>}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>
